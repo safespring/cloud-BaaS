@@ -1,0 +1,14 @@
+# sample dsm.sys for IPnett cloud
+
+SERVERNAME tsmXX.cloud.ipnett.se
+  COMMMETHOD         V6TCPIP
+  # legacy clients may have to use TCPIP
+  #COMMMETHOD         TCPIP
+  TCPSERVERADDRESS   tsmXX.cloud.ipnett.se
+  TCPPORT            1600
+  SSL                yes
+  SSLREQUIRED        yes
+  NODENAME           myTSMnodename
+  PASSWORDACCESS     GENERATE
+  MANAGEDSERVICES    SCHEDULE
+  VIRTUALMOUNTPOINT  /dev
