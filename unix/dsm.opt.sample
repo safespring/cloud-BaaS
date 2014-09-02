@@ -1,3 +1,4 @@
 # sample dsm.opt for IPnett Cloud
 
 SERVERNAME mytsmserver
+DATEFORMAT 3
