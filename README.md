@@ -1,3 +1,3 @@
-# IPnett Cloud BaaS: TSM Client Configuration
+# IPnett Cloud BaaS
 
 ...
