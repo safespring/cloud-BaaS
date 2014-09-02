@@ -3,7 +3,7 @@
 PASSWORD=mekmitasdigoat
 
 KDB=/opt/tivoli/tsm/client/ba/bin/dsmcert.kdb
-GSK8CAPICMD=/opt/tivoli/tsm/client/ba/bin/gsk8capicmd_64
+GSK8CAPICMD=gsk8capicmd_64
 
 $GSK8CAPICMD -keydb -create -db $KDB -pw $PASSWORD -stash
 
