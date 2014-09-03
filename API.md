@@ -42,40 +42,40 @@
 
     curl -v \
         --header "Authorization: Token dXNlcm5hbWU6cGFzc3dvcmQ" \
-        http://127.0.0.1:3000/domains
+        https://api.cloud.ipnett.se/tsm/domains
 
 #### Create new domain (global admin)
 
     curl -v \
         --header "Authorization: Token dXNlcm5hbWU6cGFzc3dvcmQ" \
         --data description="Example Inc." \
-        http://127.0.0.1:3000/domains
+        https://api.cloud.ipnett.se/tsm/domains
 
 #### Show domain information (global admin, domain admin)
 
     curl -v \
         --header "Authorization: Token dXNlcm5hbWU6cGFzc3dvcmQ" \
-        http://127.0.0.1:3000/domains/example.com
+        https://api.cloud.ipnett.se/tsm/domains/example.com
 
 #### Delete domain (global admin)
 
     curl -v \
         --header "Authorization: Token dXNlcm5hbWU6cGFzc3dvcmQ" \
         -X DELETE \
-        http://127.0.0.1:3000/domains/example.com
+        https://api.cloud.ipnett.se/tsm/domains/example.com
 
 #### Show domain users (global admin, domain admin)
 
     curl -v \
         --header "Authorization: Token dXNlcm5hbWU6cGFzc3dvcmQ" \
-        http://127.0.0.1:3000/domains/example.com/users
+        https://api.cloud.ipnett.se/tsm/domains/example.com/users
 
 
 #### Show domain nodes (global admin, domain admin)
 
     curl -v \
         --header "Authorization: Token dXNlcm5hbWU6cGFzc3dvcmQ" \
-        http://127.0.0.1:3000/domains/example.com/nodes
+        https://api.cloud.ipnett.se/tsm/domains/example.com/nodes
 
 
 ### Users
@@ -94,20 +94,20 @@
         --header "Authorization: Token dXNlcm5hbWU6cGFzc3dvcmQ" \
         --data identity=user@example.com \
         --data domain=example.com \
-        http://127.0.0.1:3000/users
+        https://api.cloud.ipnett.se/tsm/users
 
 #### Show user information (global admin, domain admin, self)
 
     curl -v \
         --header "Authorization: Token dXNlcm5hbWU6cGFzc3dvcmQ" \
-        http://127.0.0.1:3000/users/user@example.com
+        https://api.cloud.ipnett.se/tsm/users/user@example.com
 
 #### Delete user (global admin)
 
     curl -v \
         --header "Authorization: Token dXNlcm5hbWU6cGFzc3dvcmQ" \
         -X DELETE \
-        http://127.0.0.1:3000/users/user@example.com
+        https://api.cloud.ipnett.se/tsm/users/user@example.com
 
 
 ### Keys
@@ -123,20 +123,20 @@
     curl -v \
         --header "Authorization: Token dXNlcm5hbWU6cGFzc3dvcmQ" \
         --data name=ipnett.se \
-        http://127.0.0.1:3000/keys
+        https://api.cloud.ipnett.se/tsm/keys
 
 #### Delete API key
 
     curl -v \
         --header "Authorization: Token dXNlcm5hbWU6cGFzc3dvcmQ" \
         -X DELETE \
-        http://127.0.0.1:3000/keys/xyzzy
+        https://api.cloud.ipnett.se/tsm/keys/xyzzy
 
 #### List all API key (global admin)
 
     curl -v \
         --header "Authorization: Token dXNlcm5hbWU6cGFzc3dvcmQ" \
-        http://127.0.0.1:3000/keys
+        https://api.cloud.ipnett.se/tsm/keys
 
 ### Nodes
 
@@ -164,33 +164,33 @@
     curl -v \
         --header "Authorization: Token dXNlcm5hbWU6cGFzc3dvcmQ" \
         --data hostname=server18.example.com \
-        http://127.0.0.1:3000/nodes
+        https://api.cloud.ipnett.se/tsm/nodes
 
 #### Delete backup node
 
     curl -v \
         --header "Authorization: Token dXNlcm5hbWU6cGFzc3dvcmQ" \
         -X DELETE \
-        http://127.0.0.1:3000/nodes/Eeph2jome7
+        https://api.cloud.ipnett.se/tsm/nodes/Eeph2jome7
 
 #### Show backup node information
 
     curl -v \
         --header "Authorization: Token dXNlcm5hbWU6cGFzc3dvcmQ" \
-        http://127.0.0.1:3000/nodes/Eeph2jome7
+        https://api.cloud.ipnett.se/tsm/nodes/Eeph2jome7
 
 #### Get TSM configuration file
 
     curl -v \
         --header "Authorization: Token dXNlcm5hbWU6cGFzc3dvcmQ" \
-        http://127.0.0.1:3000/nodes/Eeph2jome7/config
+        https://api.cloud.ipnett.se/tsm/nodes/Eeph2jome7/config
 
 #### Regenerate node password
 
     curl -v \
         --header "Authorization: Token dXNlcm5hbWU6cGFzc3dvcmQ" \
         -X POST \
-        http://127.0.0.1:3000/nodes/Eeph2jome7/rekey
+        https://api.cloud.ipnett.se/tsm/nodes/Eeph2jome7/rekey
 
 
 ### Platforms
@@ -203,7 +203,7 @@
 
     curl -v \
         --header "Authorization: Token dXNlcm5hbWU6cGFzc3dvcmQ" \
-        http://127.0.0.1:3000/platforms
+        https://api.cloud.ipnett.se/tsm/platforms
 
 
 ### Applications
@@ -215,7 +215,7 @@
 
     curl -v \
         --header "Authorization: Token dXNlcm5hbWU6cGFzc3dvcmQ" \
-        http://127.0.0.1:3000/applications
+        https://api.cloud.ipnett.se/tsm/applications
 	
 
 ### Servers
@@ -229,7 +229,7 @@
     curl -v \
         --header "Authorization: Token dXNlcm5hbWU6cGFzc3dvcmQ" \
         --header "Accept: application/json" \
-        http://127.0.0.1:3000/servers
+        https://api.cloud.ipnett.se/tsm/servers
 
 ### Schedules
 
@@ -240,7 +240,7 @@
 
     curl -v \
         --header "Authorization: Token dXNlcm5hbWU6cGFzc3dvcmQ" \
-        http://127.0.0.1:3000/nodes/Eeph2jome7/schedules
+        https://api.cloud.ipnett.se/tsm/nodes/Eeph2jome7/schedules
 
 
 ### Backup Policies
@@ -252,5 +252,5 @@
 
     curl -v \
         --header "Authorization: Token dXNlcm5hbWU6cGFzc3dvcmQ" \
-        http://127.0.0.1:3000/nodes/Eeph2jome7/policies
+        https://api.cloud.ipnett.se/tsm/nodes/Eeph2jome7/policies
 
