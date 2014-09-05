@@ -1,4 +1,4 @@
-# sample dsm.sys for IPnett cloud
+* sample dsm.sys for IPnett cloud
 
 SERVERNAME tsmXX.cloud.ipnett.se
   COMMMETHOD         V6TCPIP
