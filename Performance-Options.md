@@ -4,7 +4,7 @@ Tuning the client options can help you use more of the local resources
 to speed up the backup transfers, at the cost of more CPU, Network and
 I/O.
 
-Since we assume most people have decent internet links now, getting
+Since we assume most people have decent Internet links now, getting
 the data over the wire as quickly as possible is probably the most
 important part in order to finish the backup and restore tasks as fast
 as possible.
@@ -32,12 +32,11 @@ editor of your choice. Remember the default comment character is * and not #.
 In order to allow more resources while shipping data over, and to
 allow more than one thread to collect lists of files needing backup
 since the last time, the option RESOURCEUTILIZATION needs to be bumped
-from the default value to something larger, upto 10. This means upto 8
-streams could be used for communicating with the server, and upto 4
+from the default value to something larger, up to 10. This means up to 8
+streams could be used for communicating with the server, and up to 4
 threads looking over the local file systems for new and changed
 files. The complete matrix of the meaning of settings 1 to 10 is
-available at
-<http://publib.boulder.ibm.com/tividd/td/TSMM/SC32-9101-01/en_US/HTML/SC32-9101-01.htm#_Toc58484215>
+available in the [Performance Tuning Guide](<http://publib.boulder.ibm.com/tividd/td/TSMM/SC32-9101-01/en_US/HTML/SC32-9101-01.htm#_Toc58484215>), 
 but the general idea is that a higher value leads to more cores being
 dedicated to finding and sending files.
 
@@ -80,17 +79,20 @@ On the topic of encrypting traffic, the IBM software crypto software
 that comes with the TSM client (gsk8, Global Security Kit v8) should
 be as recent as possible. Newer versions include support for native
 AES-NI instructions found on Intel CPUs from the models
-Westmere/SandyBridge and newer AMDs. More complete list is available
-here: http://en.wikipedia.org/wiki/AES_instruction_set#Supporting_CPUs
+Westmere/SandyBridge and newer AMD CPUs. A more complete list can be found in [Wikipedia](http://en.wikipedia.org/wiki/AES_instruction_set#Supporting_CPUs).
 
-MacOSX clients get a recent GS kit along with the TSM v7.1x client
-bundle, Linux users should check their rpm database: rpm -qa |grep gsk
+**MacOSX** clients get a recent Global Security kit along with the TSM v7.1x
+client bundle.
+
+**Linux** users should check their rpm database using the following command:
+
+    rpm -qa |grep gsk
+
+And make sure that the following packages (or later versions) are installed in
+order to get native support for AES-NI in case your CPU does have it.
 
 - gskssl64-8.0-50.20.x86_64
 - gskcrypt64-8.0-50.20.x86_64
-
-to make sure it is version 8.0.5x or higher in order to get native
-support for AES-NI in case your CPU does have it.
 
 IBM claims Sparc64 Ultra T1 and T2 CMT processors with on-CPU crypto
 chips will benefit also, but we haven't tested any of those for crypto
@@ -115,7 +117,7 @@ both ends.
 
 Another way to minimize the amount of data you have to send is using
 deduplication, where you match outgoing datablock checksums with lists
-of previously sent datablocks. When done serverside, it will match
+of previously sent datablocks. When done server-side, it will match
 against other machines in your own domain, so backing up lots of
 machines using the same operating system will reduce the amount of
 used space since the remote end will only store each such file once.
@@ -147,9 +149,9 @@ If you don't enable the DEDUPCACHE, it will ask the server it this
 particular piece of data has been seen before, so this may be a far
 slower option for large backup jobs compared to checking against a
 local file.  It will reduce the network traffic though. Good for
-satellite links or cell phone internet I guess.
+satellite links or cell phone Internet I guess.
 
-To set the local cache size (in megabytes, 256 default):
+To set the local cache size (in megabytes, 256 MB is the default):
 
     DEDUPCACHESIZE 2048
 
