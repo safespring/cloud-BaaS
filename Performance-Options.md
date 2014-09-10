@@ -1,4 +1,4 @@
-Some hints regarding TSM Backup client performance.
+# TSM Backup Client Performance.
 
 Tuning the client options can help you use more of the local resources
 to speed up the backup transfers, at the cost of more CPU, Network and
@@ -19,20 +19,15 @@ The client options discussed in this guide are set in the TSM config
 file "dsm.sys", found by default in different places on different
 OSes: 
 
-Linux/Unix:
-"/opt/tivoli/tsm/client/ba/bin/dsm.sys"
-
-MacOSX:
-"/Library/Application Support/tivoli/tsm/client/ba/bin/dsm.sys"
-
-Windows:
-"C:\Program Files\tivoli\tsm\baclient\dsm.sys"
+- Linux/Unix: "/opt/tivoli/tsm/client/ba/bin/dsm.sys"
+- MacOSX: "/Library/Application Support/tivoli/tsm/client/ba/bin/dsm.sys"
+- Windows: "C:\Program Files\tivoli\tsm\baclient\dsm.sys"
 
 These are simple text files and can be edited with any simple text
-editor of your choice. Remember the default comment char is * and not
-#.
+editor of your choice. Remember the default comment character is * and not #.
 
--- PARALELLISM
+
+## Parallelism
 
 In order to allow more resources while shipping data over, and to
 allow more than one thread to collect lists of files needing backup
@@ -42,14 +37,13 @@ streams could be used for communicating with the server, and upto 4
 threads looking over the local file systems for new and changed
 files. The complete matrix of the meaning of settings 1 to 10 is
 available at
-
 <http://publib.boulder.ibm.com/tividd/td/TSMM/SC32-9101-01/en_US/HTML/SC32-9101-01.htm#_Toc58484215>
 but the general idea is that a higher value leads to more cores being
 dedicated to finding and sending files.
 
 Add:
 
-RESOURCEUTILIZATION 5
+    RESOURCEUTILIZATION 5
 
 to the dsm.sys file, and the next run will use up a few more cores on
 your server, hopefully shortening the time it takes for the actual
@@ -60,7 +54,7 @@ incremental runs could run with a lower setting in order to leave more
 for the regular tasks of your server if it is acceptable to have
 longer run times in order to not peg all CPU cores while running.
 
--- NETWORK SETTINGS
+## Network Settings
 
 While tuning you might want to bump TSM client tcp window limits and
 buffer sizes too, since many of the options are defaulting to rather
@@ -68,9 +62,8 @@ conservative low values that were appropriate a long time ago. Among
 the ones that may have a positive impact while bumping memory usage up
 a meg or two are:
 
-TCPBUFSIZE (default is 32, max 512 in kilobytes)
-
-TCPWINDOWSIZE (default 63/64, max 2048 in kilobytes) 
+- TCPBUFSIZE (default is 32, max 512 in kilobytes)
+- TCPWINDOWSIZE (default 63/64, max 2048 in kilobytes) 
 
 This may also need a bump or two in the appropriate sysctls if your
 Linux or Solaris OS is old. Newer machines either have better defaults
@@ -81,7 +74,7 @@ Generic network tuning guides are plenty on the net.
 focus on not starving a 64M ram machine with a "fast" 100Mbit/s
 interface)
 
--- CPU NATIVE AES INSTRUCTIONS
+## CPU-native AES Instructions
 
 On the topic of encrypting traffic, the IBM software crypto software
 that comes with the TSM client (gsk8, Global Security Kit v8) should
@@ -93,8 +86,8 @@ here: http://en.wikipedia.org/wiki/AES_instruction_set#Supporting_CPUs
 MacOSX clients get a recent GS kit along with the TSM v7.1x client
 bundle, Linux users should check their rpm database: rpm -qa |grep gsk
 
-gskssl64-8.0-50.20.x86_64
-gskcrypt64-8.0-50.20.x86_64
+- gskssl64-8.0-50.20.x86_64
+- gskcrypt64-8.0-50.20.x86_64
 
 to make sure it is version 8.0.5x or higher in order to get native
 support for AES-NI in case your CPU does have it.
@@ -103,7 +96,7 @@ IBM claims Sparc64 Ultra T1 and T2 CMT processors with on-CPU crypto
 chips will benefit also, but we haven't tested any of those for crypto
 performance. 
 
--- LOCAL DEDUPLICATION AND COMPRESSION
+## Local Compression
 
 Among all the options to tweak and tune how to send data faster, the
 overall best option is to not send it at all of course. This comes
@@ -112,11 +105,13 @@ is a choice you can make. Compression is rather simple, a yes/no
 option to have all data compressed before going over the wire like
 this:
 
-COMPRESSION yes
+    COMPRESSION yes
 
 Compression eats cpu but attempts to minimize the data that has to be
 sent over, and also minimized the amount one has to encrypt/decrypt at
 both ends.
+
+## Local Deduplication
 
 Another way to minimize the amount of data you have to send is using
 deduplication, where you match outgoing datablock checksums with lists
@@ -145,11 +140,8 @@ sending the same data over and over might be worth preventing.
  
 To enable client side deduplication, simply add:
 
-DEDUPLICATION yes
-
-and
-
-ENABLEDEDUPCACHE yes
+    DEDUPLICATION    yes
+    ENABLEDEDUPCACHE yes
 
 If you don't enable the DEDUPCACHE, it will ask the server it this
 particular piece of data has been seen before, so this may be a far
@@ -159,19 +151,13 @@ satellite links or cell phone internet I guess.
 
 To set the local cache size (in megabytes, 256 default):
 
-DEDUPCACHESIZE 2048
+    DEDUPCACHESIZE 2048
 
 To place it somewhere specific:
 
-DEDUPCACHEPATH /path/to/cache/dir/
+    DEDUPCACHEPATH /path/to/cache/dir/
 
 Using deduplication together with compression has no negative impact,
 whenever the client has something to send over the network to the
 server, it will be compressed.  The deduplication decision has already
 been made at that point.
-
-
-
-
-
-
