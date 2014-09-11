@@ -1,4 +1,4 @@
-# TSM Backup Client Performance.
+# TSM Backup Client Performance
 
 Tuning the client options can help you use more of the local resources
 to speed up the backup transfers, at the cost of more CPU, Network and
