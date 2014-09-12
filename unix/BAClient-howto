@@ -1,0 +1,88 @@
+_Installing IBM TSM client LinuxX86_64 SYSV_
+  Required packages
+   - gskcrypt64-8.x.x.x.linux.x86_64.rpm
+   - gskssl64-8.x.x.x.linux.x86_64.rpm
+   - TIVsm-API64.x86_64.rpm
+   - TIVsm-BA.x86_64.rpm
+
+  Install 64-bit GSkit
+   # rpm -U gskcrypt64-8.x.x.x.linux.x86_64.rpm gskssl64-8.x.x.x.linux.x86_64.rpm
+
+  Install 64-bit TSM API
+   # rpm -i TIVsm-API64.x86_64.rpm
+
+  Install TSM backup-archive client components
+   # rpm -i TIVsm-BA.x86_64.rpm
+  
+  Copy provided config files
+   # Need to know more about config distibution 
+
+_IBM TSM Backup-Archive cliend CLI_
+  Default install directory: /opt/tivoli/tsm/client/ba/bin
+  Backup-Archive client CLI: dsmc
+  Backup-Arcive client GUI: dsmj # See online documentation
+		###########################################################
+		[john@localhost ~]$ dsmc
+		IBM Tivoli Storage Manager
+		Command Line Backup-Archive Client Interface
+		  Client Version 7, Release 1, Level 0.3
+		  Client date/time: 09/12/2014 09:27:09
+		(c) Copyright by IBM Corporation and other(s) 1990, 2014. All Rights Reserved.
+
+		Node Name: john-x201.CRISTIE.SE
+		Session established with server TSM2: Windows
+		  Server Version 7, Release 1, Level 0.100
+		  Server date/time: 09/12/2014 09:26:41  Last access: 09/12/2014 09:25:15
+
+		tsm> quit
+		############################################################
+   
+   Help pages are included in dsmc
+    $ dsmc help help 
+	################
+	# 2.21 Help
+	# Use the help command to display information about commands, options, and
+	# messages.
+	#
+	# Tip: If you use the help command on the initial command line, no server
+	#  contact is made and no password is needed.
+	###################################
+    $ dsmc help restore
+    $ dsmc help incremental
+    $ dsmc help selective
+
+   
+
+_Backing up using TSM backup-archive client CLI_
+  Scheduled - Tivoli Storage Manager client acceptor daemon service 
+   # /etc/init.d/dsmcad {start|stop|restart|status}
+
+  Manually
+  - Incremantal backup, backup changed files, file path/filesystem optional parameter
+   # cd /opt/tivoli/tsm/client/ba/bin
+   # dsmc
+   tsm> incremental [/path/to/backup]
+    
+  - Selective backup (always backup, incl non-changed files)
+   # cd /opt/tivoli/tsm/client/ba/bin
+   # dsmc 
+   tsm> selective </path/to/backup> [option]
+
+_Restoring files using TSM backup-archive client CLI_
+  Restore a file examples (dsmc help restore)
+   # cd /opt/tivoli/tsm/client/ba/bin
+   # dsmc
+   -- Restore the most recent version of a deleted file
+   tsm> restore /path/to/file.txt -latest 
+   -- List all versions of a file, pick one to restore
+   tsm> restore /path/to/file.txt -pick -inactive 
+   -- Restore file1 to new name and location
+   tsm> restore /path/to/file1.txt /path/to/new/dir/file2.txt 
+   
+  Restore multiple files examples
+   # cd /opt/tivoli/tsm/client/ba/bin
+   # dsmc
+   -- Restore file structure to original location incl subdirectories
+   tsm> restore /home/ -subdirs=yes  
+   -- Restore many files to new location, trailing / is important if "projects" is a dir, use " " for paths with wildcards 
+   tsm> restore "/home/john/Documents/*" /home/glenn/projects/ 
