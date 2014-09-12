@@ -17,7 +17,7 @@ _Installing IBM TSM client LinuxX86_64 SYSV_
   Copy provided config files
    # Need to know more about config distibution 
 
-_IBM TSM Backup-Archive cliend CLI_
+_IBM TSM Backup-Archive client CLI_
   Default install directory LINUX: /opt/tivoli/tsm/client/ba/bin
   Default install directory Solaris: /usr/tivoli/tsm/client/ba/bin
   Backup-Archive client CLI: dsmc
