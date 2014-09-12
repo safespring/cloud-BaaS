@@ -1,0 +1,80 @@
+_TBMR user guide Linux/x86_64_
+- Required packages
+-- tbmr-7.1.2.linux.x86_64.iso
+
+################
+# Install TBMR #
+################
+  1 Mount the ISO file
+   # mkdir -p /mnt/TBMR
+   # mount -o loop /path/to/tbmr-7.1.2.linux.x86_64.iso /mnt/TBMR
+   -- Install packages located in /mnt/TBMR/linux/install/main
+		[root@localhost main]# ls -ltr
+		total 13254
+		-r-xr-xr-x 1 root root 6783618 Jun 23 16:46 tbmr-7.1-2.x86_64.rpm
+		-r-xr-xr-x 1 root root 6787925 Jun 23 16:46 tbmr-7.1-2.linux.x86_64.tar.gz
+
+  2a Install using RPM
+   # rpm -i tbmr-7.1-2.x86_64.rpm
+  - OR - 
+  2b Install using install script in tarball.
+   # cp tbmr-7.1-2.linux.x86_64.tar.gz /tmp
+   # cd /tmp
+   # tar xvzf tbmr-7.1-2.linux.x86_64.tar.gz
+   # cd tbmr
+   # ./install
+
+  3 Confirm /TBMRCFG/disrec.ini
+		[root@localhost TBMRCFG]# ls -ltr
+		total 36
+		-rw------- 1 root root 27357 Sep 12 15:29 disrec.ini
+		-rw-r--r-- 1 root root   188 Sep 12 15:29 tbmrcfg.log
+
+  4 Run licence manager, extract serial
+   # cd /TBMRCFG/
+   # echo > /TBMRCFG/`licmgr --sig`.sig
+
+  5 Licence it
+   # 
+
+######################
+# Use TBMR to backup #
+######################
+
+  - Add line to dsm.sys (default: /opt/tivoli/tsm/client/ba/bin/dsm.sys)
+  -- /dev is not backed up by default, this will create a separate filespace which can be restored
+   # echo "virtualmountpoint /dev" >> /opt/tivoli/tsm/client/ba/bin/dsm.sys
+  
+  - Run tbmrcfg
+  -- tbmrcfg have a manual page 
+   # tbmrcfg -- help 
+  
+  - To save system configuration information for system using grub installed on /dev/sda
+   # tbmrcfg -b grub -d /dev/sda
+
+  - Run an incremental backup using IBM TSM backup-archive client
+   # dsmc i
+  
+  - Schedule a run of tbmrcfg to ensure that the system can recover to the latest version
+  - Always run tbmrcfg and incremental backup after system changes
+   
+#######################
+# Use TBMR to restore #
+#######################
+
+  - Make a bootable USB or DVD with tbmr-7.1.2.linux.x86_64.iso
+  - Boot into Recovery environment usng the ISO
+   -- X-Windows based linux recovery environment is recommended
+   -- Automatic recovery wizard is recommended 
+   -- Provide TSM server information
+	-> Server address
+	-> Port
+	-> Node name
+	-> Password
+   -- Configure network
+  - Read configuration data from backup
+   -- Get configuration
+   -- Click next to start the recovery process 
+   -- Confirm partition settings
+  - Reboot into recoverd OS  
+
