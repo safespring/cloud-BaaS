@@ -86,7 +86,6 @@
 - authorized\_keys: list of user's keys
 - cost\_centers: list of acceptable cost centers
 - admin\_domain: set if user is domain admin
-- admin\_global: set if user is global admin
 
 
 #### Create new user (global admin)
