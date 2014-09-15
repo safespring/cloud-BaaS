@@ -142,9 +142,9 @@ sub main() {
     die "$config not found" unless (-f $config);
     my ($hashref, $arrayref, $string) = YAML::LoadFile($config);
 
-    die "no API endpoint set" unless ($hashref->{endpoint});
-    die "no API username set" unless ($hashref->{username});
-    die "no API password set" unless ($hashref->{password});
+    die "no API endpoint set"          unless ($hashref->{endpoint});
+    die "no API access_key_id set"     unless ($hashref->{access_key_id});
+    die "no API secret_access_key set" unless ($hashref->{secret_access_key});
 
     if (defined($hashref->{verify_hostname})) {
         $ua->ssl_opts('verify_hostname' => $hashref->{verify_hostname});
@@ -152,7 +152,9 @@ sub main() {
 
     $endpoint = $hashref->{endpoint};
     $auth =
-      encode_base64(join(':', $hashref->{username}, $hashref->{password}), "");
+      encode_base64(
+        join(':', $hashref->{access_key_id}, $hashref->{secret_access_key}),
+        "");
 
     if ($verb eq "get" or $verb eq "show") {
 

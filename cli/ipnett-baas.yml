@@ -1,5 +1,5 @@
 #endpoint: https://api.cloud.ipnett.se/tsm/
-endpoint: http://0.0.0.0:3000/
-username: username
-password: password
+endpoint: https://api.cloud.ipnett.se/tsm/
+access_key_id: username
+secret_access_key: password
 verify_hostname: 0
