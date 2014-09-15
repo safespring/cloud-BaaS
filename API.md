@@ -159,6 +159,16 @@
 - schedule: list of associated backup schedules
 - policy: node backup policy
 
+The following node properties can only be set when creating a node:
+
+- domain
+- server
+- application
+- platform
+- encryption
+- deduplication
+- compression
+
 
 #### Create new backup node
 
