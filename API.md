@@ -36,7 +36,8 @@
 - tag: short version of the domain name (e.g. 'example')
 - description: domain description
 - servers: list of TSM servers
-- deduplication: percent of data not stored due to deduplication
+- deduplication: percent of data not stored due to deduplication (weighted
+  average across all TSM servers used by the domain)
 
 #### List all domains (global admin)
 
