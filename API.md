@@ -116,7 +116,7 @@
 - access\_key\_id: (generated)
 - secret\_access\_key: (only readable upon creation)
 - description: key description
-- impersonator : set if user is allowed to impersonate other users
+- impersonator : set if key may be used to impersonate other users
 
 #### Create new API key
 
@@ -155,6 +155,7 @@
 - locked\_by\_service: set if node is locked by the server provider
 - encryption: set if data should be encrypted before backup
 - deduplication: set if data deduplication is enabled
+- compression: set if data compression is enabled
 - schedule: list of associated backup schedules
 - policy: node backup policy
 
