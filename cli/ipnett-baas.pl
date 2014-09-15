@@ -53,11 +53,7 @@ sub rest_get ($) {
     $req->header('Authorization' => "Token $auth");
     $req->header('Impersonate' => $impersonate) if ($impersonate);
 
-    print STDERR $req->as_string if ($verbose);
-
-    return undef if ($fake);
-
-    return $ua->request($req);
+    return $req;
 }
 
 sub rest_delete ($) {
@@ -68,11 +64,7 @@ sub rest_delete ($) {
     $req->header('Authorization' => "Token $auth");
     $req->header('Impersonate' => $impersonate) if ($impersonate);
 
-    print STDERR $req->as_string if ($verbose);
-
-    return undef if ($fake);
-
-    return $ua->request($req);
+    return $req;
 }
 
 sub rest_post ($) {
@@ -83,11 +75,7 @@ sub rest_post ($) {
     $req->header('Authorization' => "Token $auth");
     $req->header('Impersonate' => $impersonate) if ($impersonate);
 
-    print STDERR $req->as_string if ($verbose);
-
-    return undef if ($fake);
-
-    return $ua->request($req);
+    return $req;
 }
 
 sub rest_post_json ($$) {
@@ -101,11 +89,7 @@ sub rest_post_json ($$) {
     $req->header('Impersonate'   => $impersonate) if ($impersonate);
     $req->content($json);
 
-    print STDERR $req->as_string if ($verbose);
-
-    return undef if ($fake);
-
-    return $ua->request($req);
+    return $req;
 }
 
 sub rest_put_json ($$) {
@@ -119,11 +103,7 @@ sub rest_put_json ($$) {
     $req->header('Impersonate'   => $impersonate) if ($impersonate);
     $req->content($json);
 
-    print STDERR $req->as_string if ($verbose);
-
-    return undef if ($fake);
-
-    return $ua->request($req);
+    return $req;
 }
 
 sub output_content($) {
@@ -140,9 +120,9 @@ sub output_content($) {
 }
 
 sub main() {
-    my $help     = 0;
-    my $man      = 0;
-    my $response = undef;
+    my $help    = 0;
+    my $man     = 0;
+    my $request = undef;
 
     GetOptions(
         "pretty"        => \$pretty,
@@ -150,7 +130,7 @@ sub main() {
         "impersonate=s" => \$impersonate,
         'help|?'        => \$help,
         'man'           => \$man,
-        'debug'         => \$verbose,
+        'verbose'       => \$verbose,
         'fake'          => \$fake,
     ) or pod2usage(2);
 
@@ -184,38 +164,38 @@ sub main() {
     if ($verb eq "get" or $verb eq "show") {
 
         if ($subj eq "domains") {
-            $response = rest_get("domains");
+            $request = rest_get("domains");
         } elsif ($subj eq "users") {
-            $response = rest_get("users");
+            $request = rest_get("users");
         } elsif ($subj eq "keys") {
-            $response = rest_get("keys");
+            $request = rest_get("keys");
         } elsif ($subj eq "nodes") {
-            $response = rest_get("nodes");
+            $request = rest_get("nodes");
         } elsif ($subj eq "servers") {
-            $response = rest_get("servers");
+            $request = rest_get("servers");
         } elsif ($subj eq "platforms") {
-            $response = rest_get("platforms");
+            $request = rest_get("platforms");
         } elsif ($subj eq "applications") {
-            $response = rest_get("applications");
+            $request = rest_get("applications");
         } elsif ($subj eq "domain") {
             my $domain = shift @ARGV;
-            $response = rest_get("domains/$domain");
+            $request = rest_get("domains/$domain");
         } elsif ($subj eq "user") {
             my $user = shift @ARGV;
-            $response = rest_get("users/$user");
+            $request = rest_get("users/$user");
         } elsif ($subj eq "key") {
             my $key = shift @ARGV;
-            $response = rest_get("keys/$key");
+            $request = rest_get("keys/$key");
         } elsif ($subj eq "node") {
             my $nodename = shift @ARGV;
             my $subreq   = shift @ARGV;
 
             if ($subreq and $subreq eq "schedules") {
-                $response = rest_get("nodes/$nodename/schedules");
+                $request = rest_get("nodes/$nodename/schedules");
             } elsif ($subreq and $subreq eq "policies") {
-                $response = rest_get("nodes/$nodename/policies");
+                $request = rest_get("nodes/$nodename/policies");
             } else {
-                $response = rest_get("nodes/$nodename");
+                $request = rest_get("nodes/$nodename");
             }
         } else {
             pod2usage(-1);
@@ -226,7 +206,7 @@ sub main() {
         if ($subj eq "key") {
 
             my $description = shift @ARGV;
-            $response =
+            $request =
               rest_post_json("keys",
                 encode_json({ description => $description }));
 
@@ -248,7 +228,7 @@ sub main() {
                 $compression   = 0 if ($opt =~ /^nocomp/);
             }
 
-            $response = rest_post_json(
+            $request = rest_post_json(
                 "nodes",
                 encode_json(
                     {
@@ -269,7 +249,7 @@ sub main() {
 
         if ($subj eq "node") {
             my $nodename = shift @ARGV;
-            $response = rest_post("nodes/$nodename/rekey");
+            $request = rest_post("nodes/$nodename/rekey");
         } else {
             pod2usage(-1);
         }
@@ -278,7 +258,7 @@ sub main() {
 
         if ($subj eq "node") {
             my $nodename = shift @ARGV;
-            $response =
+            $request =
               rest_put_json("nodes/$nodename",
                 encode_json({ locked_by_user => 1 }));
         } else {
@@ -289,7 +269,7 @@ sub main() {
 
         if ($subj eq "node") {
             my $nodename = shift @ARGV;
-            $response =
+            $request =
               rest_put_json("nodes/$nodename",
                 encode_json({ locked_by_user => 0 }));
         } else {
@@ -300,16 +280,16 @@ sub main() {
 
         if ($subj eq "domain") {
             my $domain = shift @ARGV;
-            $response = rest_delete("domains/$domain");
+            $request = rest_delete("domains/$domain");
         } elsif ($subj eq "user") {
             my $user = shift @ARGV;
-            $response = rest_delete("users/$user");
+            $request = rest_delete("users/$user");
         } elsif ($subj eq "key") {
             my $key = shift @ARGV;
-            $response = rest_delete("keys/$key");
+            $request = rest_delete("keys/$key");
         } elsif ($subj eq "node") {
             my $nodename = shift @ARGV;
-            $response = rest_delete("nodes/$nodename");
+            $request = rest_delete("nodes/$nodename");
         } else {
             pod2usage(-1);
         }
@@ -319,6 +299,12 @@ sub main() {
         pod2usage(-1);
 
     }
+
+    print STDERR $request->as_string if ($verbose);
+
+    exit(-1) if ($fake);
+
+    my $response = $ua->request($request);
 
     die "No response" unless ($response);
     print STDERR $response->status_line, "\n";
@@ -348,6 +334,8 @@ ipnett-baas [options] [command]
    --man               show full man page
    --pretty            pretty print JSON output
    --config=file       use non-default configuration file (YAML)
+   --verbose           print request
+   --fake              do not actually send request
    --impersonate=user  try to impersonate user
 
  Commands:
