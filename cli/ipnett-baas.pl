@@ -42,6 +42,8 @@ my $ua          = LWP::UserAgent->new();
 my $endpoint    = undef;
 my $auth        = undef;
 my $impersonate = undef;
+my $verbose     = 0;
+my $fake        = 0;
 
 sub rest_get ($) {
     my $resource = shift;
@@ -50,6 +52,10 @@ sub rest_get ($) {
     my $req = HTTP::Request->new(GET => $url);
     $req->header('Authorization' => "Token $auth");
     $req->header('Impersonate' => $impersonate) if ($impersonate);
+
+    print STDERR $req->as_string if ($verbose);
+
+    return undef if ($fake);
 
     return $ua->request($req);
 }
@@ -62,6 +68,10 @@ sub rest_delete ($) {
     $req->header('Authorization' => "Token $auth");
     $req->header('Impersonate' => $impersonate) if ($impersonate);
 
+    print STDERR $req->as_string if ($verbose);
+
+    return undef if ($fake);
+
     return $ua->request($req);
 }
 
@@ -72,6 +82,10 @@ sub rest_post ($) {
     my $req = HTTP::Request->new(POST => $url);
     $req->header('Authorization' => "Token $auth");
     $req->header('Impersonate' => $impersonate) if ($impersonate);
+
+    print STDERR $req->as_string if ($verbose);
+
+    return undef if ($fake);
 
     return $ua->request($req);
 }
@@ -87,6 +101,10 @@ sub rest_post_json ($$) {
     $req->header('Impersonate'   => $impersonate) if ($impersonate);
     $req->content($json);
 
+    print STDERR $req->as_string if ($verbose);
+
+    return undef if ($fake);
+
     return $ua->request($req);
 }
 
@@ -100,6 +118,11 @@ sub rest_put_json ($$) {
     $req->header('Content-Type'  => "application/json");
     $req->header('Impersonate'   => $impersonate) if ($impersonate);
     $req->content($json);
+
+    print STDERR $req->as_string if ($verbose);
+
+    return undef if ($fake);
+
     return $ua->request($req);
 }
 
@@ -127,6 +150,8 @@ sub main() {
         "impersonate=s" => \$impersonate,
         'help|?'        => \$help,
         'man'           => \$man,
+        'debug'         => \$verbose,
+        'fake'          => \$fake,
     ) or pod2usage(2);
 
     pod2usage(1) if $help;
