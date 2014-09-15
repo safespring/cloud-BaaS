@@ -1,4 +1,3 @@
-#endpoint: https://api.cloud.ipnett.se/tsm/
 endpoint: https://api.cloud.ipnett.se/tsm/
 access_key_id: username
 secret_access_key: password
