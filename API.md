@@ -132,7 +132,7 @@
         -X DELETE \
         https://api.cloud.ipnett.se/tsm/keys/xyzzy
 
-#### List all API key (global admin)
+#### List all API keys (global admin)
 
     curl -v \
         --header "Authorization: Token dXNlcm5hbWU6cGFzc3dvcmQ" \
