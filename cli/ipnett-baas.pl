@@ -179,16 +179,21 @@ sub main() {
             $request = rest_get("applications");
         } elsif ($subj eq "domain") {
             my $domain = shift @ARGV;
+            pod2usage(-message => "Missing domain name") unless ($domain);
             $request = rest_get("domains/$domain");
         } elsif ($subj eq "user") {
             my $user = shift @ARGV;
+            pod2usage(-message => "Missing user name") unless ($user);
             $request = rest_get("users/$user");
         } elsif ($subj eq "key") {
             my $key = shift @ARGV;
+            pod2usage(-message => "Missing key id") unless ($key);
             $request = rest_get("keys/$key");
         } elsif ($subj eq "node") {
             my $nodename = shift @ARGV;
             my $subreq   = shift @ARGV;
+
+            pod2usage(-message => "Missing node name") unless ($nodename);
 
             if ($subreq and $subreq eq "schedules") {
                 $request = rest_get("nodes/$nodename/schedules");
@@ -214,6 +219,9 @@ sub main() {
 
             my $hostname    = shift @ARGV;
             my $cost_center = shift @ARGV;
+
+            pod2usage(-message => "Missing host name")   unless ($hostname);
+            pod2usage(-message => "Missing cost center") unless ($cost_center);
 
             my $encryption    = 0;
             my $deduplication = 0;
@@ -249,6 +257,7 @@ sub main() {
 
         if ($subj eq "node") {
             my $nodename = shift @ARGV;
+            pod2usage(-message => "Missing node name") unless ($nodename);
             $request = rest_post("nodes/$nodename/rekey");
         } else {
             pod2usage(-1);
@@ -258,6 +267,7 @@ sub main() {
 
         if ($subj eq "node") {
             my $nodename = shift @ARGV;
+            pod2usage(-message => "Missing node name") unless ($nodename);
             $request =
               rest_put_json("nodes/$nodename",
                 encode_json({ locked_by_user => 1 }));
@@ -269,6 +279,7 @@ sub main() {
 
         if ($subj eq "node") {
             my $nodename = shift @ARGV;
+            pod2usage(-message => "Missing node name") unless ($nodename);
             $request =
               rest_put_json("nodes/$nodename",
                 encode_json({ locked_by_user => 0 }));
@@ -280,15 +291,19 @@ sub main() {
 
         if ($subj eq "domain") {
             my $domain = shift @ARGV;
+            pod2usage(-message => "Missing domain name") unless ($domain);
             $request = rest_delete("domains/$domain");
         } elsif ($subj eq "user") {
             my $user = shift @ARGV;
+            pod2usage(-message => "Missing user name") unless ($user);
             $request = rest_delete("users/$user");
         } elsif ($subj eq "key") {
             my $key = shift @ARGV;
+            pod2usage(-message => "Missing key id") unless ($key);
             $request = rest_delete("keys/$key");
         } elsif ($subj eq "node") {
             my $nodename = shift @ARGV;
+            pod2usage(-message => "Missing node name") unless ($nodename);
             $request = rest_delete("nodes/$nodename");
         } else {
             pod2usage(-1);
