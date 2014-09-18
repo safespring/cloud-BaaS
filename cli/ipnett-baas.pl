@@ -179,12 +179,30 @@ sub main() {
             $request = rest_get("applications");
         } elsif ($subj eq "domain") {
             my $domain = shift @ARGV;
+            my $subreq = shift @ARGV;
+
             pod2usage(-message => "Missing domain name") unless ($domain);
-            $request = rest_get("domains/$domain");
+
+            if ($subreq and $subreq eq "nodes") {
+                $request = rest_get("domains/$domain/nodes");
+            } elsif ($subreq and $subreq eq "users") {
+                $request = rest_get("domains/$domain/users");
+            } elsif ($subreq and $subreq eq "admins") {
+                $request = rest_get("domains/$domain/admins");
+            } else {
+                $request = rest_get("domains/$domain");
+            }
         } elsif ($subj eq "user") {
-            my $user = shift @ARGV;
+            my $user   = shift @ARGV;
+            my $subreq = shift @ARGV;
+
             pod2usage(-message => "Missing user name") unless ($user);
-            $request = rest_get("users/$user");
+
+            if ($subreq and $subreq eq "nodes") {
+                $request = rest_get("users/$user/nodes");
+            } else {
+                $request = rest_get("users/$user");
+            }
         } elsif ($subj eq "key") {
             my $key = shift @ARGV;
             pod2usage(-message => "Missing key id") unless ($key);
@@ -363,11 +381,12 @@ ipnett-baas [options] [command]
     get platforms
     get applications
     get domain [domain]
+    get domain [domain] (nodes|users|admins)
     get user [user]
+    get user [user] nodes
     get key [key]
     get node [node]
-    get node [node] schedules
-    get node [node] policies
+    get node [node] (schedules|policies)
 
     create key [description]
     create node [hostname] [costcenter] [encr] [dedup] [comp]
