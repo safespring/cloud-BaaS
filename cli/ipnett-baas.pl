@@ -389,7 +389,7 @@ ipnett-baas [options] [command]
     get node [node] (schedules|policies)
 
     create key [description]
-    create node [hostname] [costcenter] [encr] [dedup] [comp]
+    create node [hostname] [costcenter] (encr|dedup) (comp)
     rekey node [nodename]
     lock node [nodename]
     unlock node [nodename]
