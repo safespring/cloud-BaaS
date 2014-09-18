@@ -244,7 +244,7 @@ sub main() {
                         cost_center   => $cost_center,
                         encryption    => ($encryption ? 1 : 0),
                         deduplication => ($deduplication ? 1 : 0),
-                        ##compression   => ($compression ? 1 : 0),
+                        compression   => ($compression ? 1 : 0),
                     }
                 )
             );
