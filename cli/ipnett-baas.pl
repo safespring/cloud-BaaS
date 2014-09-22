@@ -27,6 +27,7 @@ use strict;
 use warnings;
 
 use MIME::Base64;
+use LWP;
 use LWP::UserAgent;
 use LWP::Protocol::https;
 use JSON;
