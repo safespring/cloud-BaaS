@@ -131,7 +131,7 @@ sub main() {
         "impersonate=s" => \$impersonate,
         'help|?'        => \$help,
         'man'           => \$man,
-        'verbose'       => \$verbose,
+        'verbose+'      => \$verbose,
         'fake'          => \$fake,
     ) or pod2usage(2);
 
@@ -347,8 +347,9 @@ sub main() {
 
     die "No response" unless ($response);
     print STDERR $response->status_line, "\n";
+    print STDERR $response->headers->as_string, "\n" if ($verbose);
 
-    if ($response->header("Content-Type") eq "application/json") {
+    if ($response->header("Content-Type") =~ /^application\/json/) {
         output_content($response->content);
     } elsif ($response->header("Content-Type") eq "application/zip") {
         if ($filename) {
