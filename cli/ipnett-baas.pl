@@ -288,12 +288,21 @@ sub main() {
             pod2usage(-message => "Missing node name") unless ($nodename);
 
             if ($subreq and $subreq eq "policy") {
-
                 pod2usage(-message => "Missing policy name") unless ($subarg);
 
                 $request =
                   rest_put_json("nodes/$nodename",
                     encode_json({ policy => $subarg }));
+            } elsif ($subreq
+                and ($subreq eq "schedule" or $subreq eq "schedules"))
+            {
+                pod2usage(-message => "Missing schedule name") unless ($subarg);
+
+                my @schedules = split(/,/, $subarg);
+
+                $request =
+                  rest_put_json("nodes/$nodename",
+                    encode_json({ schedules => \@schedules }));
             } else {
                 pod2usage(-1);
             }
@@ -439,6 +448,7 @@ ipnett-baas [options] [command]
     lock node [nodename]
     unlock node [nodename]
     set node [node] policy [policy]
+    set node [node] schedule [schedule]
 
     delete domain [domain]
     delete user [username]
