@@ -277,6 +277,30 @@ sub main() {
             pod2usage(-1);
         }
 
+    } elsif ($verb eq "set") {
+
+        if ($subj eq "node") {
+
+            my $nodename = shift @ARGV;
+            my $subreq   = shift @ARGV;
+            my $subarg   = shift @ARGV;
+
+            pod2usage(-message => "Missing node name") unless ($nodename);
+
+            if ($subreq and $subreq eq "policy") {
+
+                pod2usage(-message => "Missing policy name") unless ($subarg);
+
+                $request =
+                  rest_put_json("nodes/$nodename",
+                    encode_json({ policy => $subarg }));
+            } else {
+                pod2usage(-1);
+            }
+
+        } else {
+            pod2usage(-1);
+        }
     } elsif ($verb eq "rekey") {
 
         if ($subj eq "node") {
@@ -414,6 +438,7 @@ ipnett-baas [options] [command]
     rekey node [nodename]
     lock node [nodename]
     unlock node [nodename]
+    set node [node] policy [policy]
 
     delete domain [domain]
     delete user [username]
