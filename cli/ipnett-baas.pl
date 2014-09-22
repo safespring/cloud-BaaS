@@ -375,7 +375,7 @@ sub main() {
 
     if ($response->header("Content-Type") =~ /^application\/json/) {
         output_content($response->content);
-    } elsif ($response->header("Content-Type") eq "text/plain") {
+    } elsif ($response->header("Content-Type") =~ /^text\//) {
         print $response->content;
     } elsif ($response->header("Content-Type") eq "application/zip") {
         if ($filename) {
