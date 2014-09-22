@@ -141,6 +141,8 @@ sub main() {
     my $verb = shift @ARGV;
     my $subj = shift @ARGV;
 
+    my $filename;
+
     unless ($verb and $subj) {
         pod2usage(-1);
     }
@@ -218,6 +220,9 @@ sub main() {
                 $request = rest_get("nodes/$nodename/schedules");
             } elsif ($subreq and $subreq eq "policies") {
                 $request = rest_get("nodes/$nodename/policies");
+            } elsif ($subreq and $subreq eq "config") {
+                $request  = rest_get("nodes/$nodename/config");
+                $filename = "dsm-$nodename.zip";
             } else {
                 $request = rest_get("nodes/$nodename");
             }
@@ -342,7 +347,19 @@ sub main() {
 
     die "No response" unless ($response);
     print STDERR $response->status_line, "\n";
-    output_content($response->content);
+
+    if ($response->header("Content-Type") eq "application/json") {
+        output_content($response->content);
+    } elsif ($response->header("Content-Type") eq "application/zip") {
+        if ($filename) {
+            my $fh;
+            open($fh, ">", $filename);
+            print $fh $response->content;
+            close($fh);
+        }
+    } else {
+        print STDERR "Unknown Content-Type\n";
+    }
 
     if ($response->is_success) {
         exit(0);
@@ -387,7 +404,7 @@ ipnett-baas [options] [command]
     get user [user] nodes
     get key [key]
     get node [node]
-    get node [node] (schedules|policies)
+    get node [node] (schedules|policies|config)
 
     create key [description]
     create node [hostname] [costcenter] (encr|dedup) (comp)
