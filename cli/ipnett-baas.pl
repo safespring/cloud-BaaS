@@ -347,10 +347,12 @@ sub main() {
 
     die "No response" unless ($response);
     print STDERR $response->status_line, "\n";
-    print STDERR $response->headers->as_string, "\n" if ($verbose);
+    print STDERR $response->headers->as_string, "\n" if ($verbose > 1);
 
     if ($response->header("Content-Type") =~ /^application\/json/) {
         output_content($response->content);
+    } elsif ($response->header("Content-Type") eq "text/plain") {
+        print $response->content;
     } elsif ($response->header("Content-Type") eq "application/zip") {
         if ($filename) {
             my $fh;
