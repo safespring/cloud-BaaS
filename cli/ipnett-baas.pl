@@ -386,7 +386,7 @@ ipnett-baas [options] [command]
    --man               show full man page
    --pretty            pretty print JSON output
    --config=file       use non-default configuration file (YAML)
-   --verbose           print request
+   --verbose           verbose output (may be used multiple times)
    --fake              do not actually send request
    --impersonate=user  try to impersonate user
 
