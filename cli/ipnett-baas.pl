@@ -158,6 +158,9 @@ sub main() {
         $ua->ssl_opts('verify_hostname' => $hashref->{verify_hostname});
     }
 
+    # enforce TLS v1.2
+    $ua->ssl_opts(SSL_version => 'TLSv12');
+
     $endpoint = $hashref->{endpoint};
     $auth =
       encode_base64(
