@@ -301,11 +301,16 @@ sub main() {
             {
                 pod2usage(-message => "Missing schedule name") unless ($subarg);
 
-                my @schedules = split(/,/, $subarg);
-
-                $request =
-                  rest_put_json("nodes/$nodename",
-                    encode_json({ schedules => \@schedules }));
+                if ($subarg eq "NULL") {
+                    $request =
+                      rest_put_json("nodes/$nodename",
+                        encode_json({ schedules => [] }));
+                } else {
+                    my @schedules = split(/,/, $subarg);
+                    $request =
+                      rest_put_json("nodes/$nodename",
+                        encode_json({ schedules => \@schedules }));
+                }
             } else {
                 pod2usage(-1);
             }
@@ -388,7 +393,7 @@ sub main() {
     if ($response->header("Content-Type") =~ /^application\/json/) {
         output_content($response->content);
     } elsif ($response->header("Content-Type") =~ /^text\//) {
-        print $response->content;
+        print $response->content, "\n";
     } elsif ($response->header("Content-Type") eq "application/zip") {
         if ($filename) {
             my $fh;
