@@ -37,7 +37,6 @@ use Getopt::Long;
 use Pod::Usage;
 
 my $config = "ipnett-baas.yml";
-my $pretty = 0;
 
 my $ua          = LWP::UserAgent->new();
 my $endpoint    = undef;
@@ -45,6 +44,7 @@ my $auth        = undef;
 my $impersonate = undef;
 my $verbose     = 0;
 my $fake        = 0;
+my $raw         = 0;
 
 sub rest_get ($) {
     my $resource = shift;
@@ -107,32 +107,19 @@ sub rest_put_json ($$) {
     return $req;
 }
 
-sub output_content($) {
-    my $content = shift;
-
-    return unless ($content);
-
-    if ($pretty) {
-        my $perl_scalar = decode_json($content);
-        print to_json($perl_scalar, { utf8 => 1, pretty => 1 });
-    } else {
-        print $content, "\n";
-    }
-}
-
 sub main() {
     my $help    = 0;
     my $man     = 0;
     my $request = undef;
 
     GetOptions(
-        "pretty"        => \$pretty,
         "config=s"      => \$config,
         "impersonate=s" => \$impersonate,
         'help|?'        => \$help,
         'man'           => \$man,
         'verbose+'      => \$verbose,
         'fake'          => \$fake,
+        'raw'           => \$raw,
     ) or pod2usage(2);
 
     pod2usage(1) if $help;
@@ -386,12 +373,18 @@ sub main() {
 
     my $response = $ua->request($request);
 
-    die "No response" unless ($response);
+    die "No response from server" unless ($response);
+
     print STDERR $response->status_line, "\n";
     print STDERR $response->headers->as_string, "\n" if ($verbose > 1);
 
     if ($response->header("Content-Type") =~ /^application\/json/) {
-        output_content($response->content);
+        if ($raw) {
+            print $response->content, "\n";
+        } else {
+            my $perl_scalar = decode_json($response->content);
+            print to_json($perl_scalar, { utf8 => 1, pretty => 1 });
+        }
     } elsif ($response->header("Content-Type") =~ /^text\//) {
         print $response->content, "\n";
     } elsif ($response->header("Content-Type") eq "application/zip") {
@@ -427,9 +420,9 @@ ipnett-baas [options] [command]
  Options:
    --help              brief help message
    --man               show full man page
-   --pretty            pretty print JSON output
    --config=file       use non-default configuration file (YAML)
    --verbose           verbose output (may be used multiple times)
+   --raw               RAW JSON output
    --fake              do not actually send request
    --impersonate=user  try to impersonate user
 
