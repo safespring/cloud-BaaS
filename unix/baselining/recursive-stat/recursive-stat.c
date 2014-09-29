@@ -3,8 +3,6 @@
 // Based on http://rosettacode.org/wiki/Walk_a_directory/Recursively#Library:_POSIX 
 // http://stackoverflow.com/questions/7035733/unix-c-program-to-list-directories-recursively 
 
-#include <sys/types.h>
-#include <sys/stat.h>
 #include <unistd.h>
 #include <dirent.h>
 #include <regex.h>
@@ -13,6 +11,9 @@
 #include <errno.h>
 #include <err.h>
 #include <time.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <sys/time.h>
 
 enum {
 	WALK_OK = 0,
@@ -43,7 +44,8 @@ int walk_recur(char *dname, regex_t *reg, int spec)
 	if (len >= FILENAME_MAX - 1)
 		return WALK_NAMETOOLONG;
  
-	strcpy(fn, dname);
+	strncpy(fn, dname,FILENAME_MAX);  /* if only strlcpy was available on glibc... */
+	fn[FILENAME_MAX-1]='\0';  /* forcibly truncate and zero-terminate input */
 	fn[len++] = '/';
  
 	if (!(dir = opendir(dname))) {
