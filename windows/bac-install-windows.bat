@@ -64,7 +64,8 @@ RENAME %KDB% %KDB%.NOTIPNETT
 SET ORG_PATH=%PATH%
 
 set PATH=%PATH%;c:\Program Files\Common Files\Tivoli\TSM\api64\gsk8\bin\;c:\Program Files\Common Files\Tivoli\TSM\api64\gsk8\lib64\;C:\Program Files\Common Files\Tivoli\TSM\api\gsk8\bin;C:\Program Files\Common Files\Tivoli\TSM\api\gsk8\lib
-cd %trgt_path%\baclient"
+c:
+cd %trgt_path%\baclient
 :: * Create the keystore
 %gskcmd% -keydb -create -populate -db %KDB% -pw %TSM_PASS% -stash
 :: * Insert the certificate in the keystore
