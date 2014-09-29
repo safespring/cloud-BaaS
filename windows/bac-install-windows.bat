@@ -29,7 +29,7 @@ set TASK=CHECK_CMD_ARG1_MISSING
 IF [%1] EQU [] ( Echo Problem: %TASK% & goto Error)
 set TSM_NODENAME=%1
 set TASK=CHECK_CMD_ARG2_MISSING
-IF [%1] EQU [] ( Echo Problem: %TASK% & goto Error)
+IF [%2] EQU [] ( Echo Problem: %TASK% & goto Error)
 set TSM_PASS=%2
 
 :: * Check the Certificate location
