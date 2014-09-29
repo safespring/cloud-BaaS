@@ -298,6 +298,14 @@ sub main() {
                       rest_put_json("nodes/$nodename",
                         encode_json({ schedules => \@schedules }));
                 }
+            } elsif ($subreq
+                and ($subreq eq "platform"))
+            {
+                pod2usage(-message => "Missing platform name") unless ($subarg);
+
+                $request =
+                  rest_put_json("nodes/$nodename",
+                    encode_json({ platform => $subarg }));
             } else {
                 pod2usage(-1);
             }
@@ -450,6 +458,7 @@ ipnett-baas [options] [command]
     unlock node [nodename]
     set node [node] policy [policy]
     set node [node] schedule [schedule]
+    set node [node] platform [platform]
 
     delete domain [domain]
     delete user [username]
