@@ -108,20 +108,11 @@ function addcert(){
 		echo "  If not default dir, edit BACDIR variable and try again"
 	fi
 }
-### Function for setting password ###
-function setPass(){
-	dsmc set password "$1" "$1" "$1"
-}
-##################
-# Function calls #
-##################
-if [ $# -lt 2 ];then
-	echo "You need to enter your provided password as an argument for this script"
-else
-	gskinstall
-	baapiinstal
-	baclientinstall
-	tbmrinstall
-	addcert
-	setPass "$PASSWORD"
-fi
+
+gskinstall
+baapiinstal
+baclientinstall
+tbmrinstall
+addcert
+
+dsmc query session
