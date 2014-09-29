@@ -7,9 +7,10 @@
 :: * tsm_inst TSM_CLIENT_PASSWORD
 
 :: * Settings
+c:
 set src_path=c:\tsm_images
 set tsm_msi="IBM Tivoli Storage Manager Client.msi"
-set trgt_path=%PROGRAM_FILES%\tivoli\tsm"
+set trgt_path=%PROGRAMFILES%\tivoli\tsm"
 set acrch=%PROCESSOR_ARCHITECTURE%
 set inst_log_dir=%TEMP%
 set inst_log=TSMINST.LOG
@@ -18,7 +19,7 @@ set inst_log=TSMINST.LOG
 SET KDB=%trgt_path%\baclient\dsmcert.kdb
 cd %trgt_path%\\baclient"
 
-:: Check 32 or 64 bit for gsk8kit
+:: Check 32 or 64 bit for gsk8kit 
 set gskcmd=gsk8capicmd
 if (ARCH EQU AMD64) (set gskcmd=gsk8capicmd_64)
 
