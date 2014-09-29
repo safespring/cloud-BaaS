@@ -46,7 +46,7 @@ function gskinstall() {
 	elif [ $? -eq 1 ];then
 		echo "$GSKSSL && $GSKCRYPT installed already"
 	elif [ $? -eq 0 ];then 
-		echo "$GSKSSL succssfully installed"
+		echo "$GSKSSL successfully installed"
 	else
 		echo "Error 90: Somethings wrong with $GSKSSL"
 		exit 90
@@ -62,7 +62,7 @@ function baapiinstal() {
 	elif [ $? -eq 1 ];then
 		echo "$TIVAPI installed already"
 	elif [ $? -eq 0 ];then 
-		echo "$TIVAPI succssfully installed"
+		echo "$TIVAPI successfully installed"
 	else
 		echo "Error 70: Somethings wrong with $TIVAPI"
 		exit 70
@@ -77,7 +77,7 @@ function baclientinstall(){
 	elif [ $? -eq 1 ];then
 		echo "$TIVBA installed already"
 	elif [ $? -eq 0 ];then 
-		echo "$TIVBA succssfully installed"
+		echo "$TIVBA successfully installed"
 	else
 		echo "Error 60: Somethings wrong with $TIVBA"
 		exit 60
