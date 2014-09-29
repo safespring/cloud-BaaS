@@ -106,7 +106,7 @@ cd %trgt_path%\baclient
 :: *The following line can be used to verify the SSL Cert installation
 :: gsk8capicmd_64 -cert -list -db %KDB% -stashed
 
-
+set PATH=%ORG_PATH%
 if %ERRORLEVEL% GTR 0 ( Echo Problem: %TASK% & goto Error)
 
 :: * Set and store the password in the registry 
