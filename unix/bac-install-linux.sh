@@ -115,8 +115,9 @@ function setPass(){
 ##################
 # Function calls #
 ##################
-if [ $# -lt 2 ];then
+if [ $# -ne 1 ];then
 	echo "You need to enter your provided password as an argument for this script"
+	exit 1
 else
 	gskinstall
 	baapiinstal
