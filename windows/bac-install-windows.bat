@@ -16,8 +16,6 @@ set inst_log=TSMINST.LOG
 
 ::SET PASSWORD=mekmitasdigoat
 SET KDB=%trgt_path%\baclient\dsmcert.kdb
-:: save working directory
-SET CURRDIR=%CD%
 c:
 cd %trgt_path%\baclient
 
@@ -104,7 +102,7 @@ cd %trgt_path%\baclient
 :: * Create the keystore
 %gskcmd% -keydb -create -populate -db %KDB% -pw %TSM_PASS% -stash
 :: * Insert the certificate in the keystore
-%gskcmd% -cert -add -db %KDB% -label "IPnett BaaS Root CA" -file %CURRDIR%\IPnett-Cloud-Root-CA.pem -format ascii -stashed 
+%gskcmd% -cert -add -db %KDB% -label "IPnett BaaS Root CA" -file IPnett-Cloud-Root-CA.pem -format ascii -stashed 
 :: *The following line can be used to verify the SSL Cert installation
 :: gsk8capicmd_64 -cert -list -db %KDB% -stashed
 
