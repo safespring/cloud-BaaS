@@ -19,15 +19,21 @@
 ARCH=`uname -p`
 GSKSSL=gskssl64-8.0.14.28.linux.$ARCH.rpm
 GSKCRYPT=gskcrypt64-8.0.14.28.linux.$ARCH.rpm
+if [ x"$ARCH" = x"x86_64" ]; then
+    GSK_CMD=gsk8capicmd_64
+else
+    GSK_CMD=gsk8capicmd
+fi
 TIVAPI=TIVsm-API64.$ARCH.rpm
 TIVBA=TIVsm-BA.$ARCH.rpm
 BACDIR=/opt/tivoli/tsm/client/ba/bin
 TBMR=tbmr-7.1-2.$ARCH.rpm
-KPASS=mekmitasdigoat
+KPASS=$(mktemp -d /tmp/temp-one-time-idXXXXXXXXXXXXX)
+rmdir $KPASS
 GSKLABEL="IPnett BaaS Root CA"
 GSKFILE=IPnett-Cloud-Root-CA.pem
 DSMCERTFILE=/opt/tivoli/tsm/client/ba/bin/dsmcert.kdb
-PASSWORD=$1
+PASSWORD="$1"
 
 #############
 # Functions #
@@ -92,10 +98,10 @@ function tbmrinstall() {
 function addcert(){
 	if [ -d $BACDIR ];then
 		if [ -f $DSMCERTFILE ];then
-			(cd $BACDIR && gsk8capicmd_64 -cert -add -db dsmcert.kdb -label "$GSKLABEL" -file $GSKFILE -format ascii -stashed)
+			(cd $BACDIR && $GSK_CMD -cert -add -db dsmcert.kdb -label "$GSKLABEL" -file $GSKFILE -format ascii -stashed)
 		else
-			(cd $BACDIR && gsk8capicmd_64 -keydb -create -populate -db dsmcert.kdb -pw $KPASS -stash)
-			(cd $BACDIR && gsk8capicmd_64 -cert -add -db dsmcert.kdb -label "$GSKLABEL" -file $GSKFILE -format ascii -stashed)
+			(cd $BACDIR && $GSK_CMD -keydb -create -populate -db dsmcert.kdb -pw $KPASS -stash)
+			(cd $BACDIR && $GSK_CMD -cert -add -db dsmcert.kdb -label "$GSKLABEL" -file $GSKFILE -format ascii -stashed)
 		fi
 	else
 		echo "The TSM client directory don't exist, or is != default: $BACDIR"
@@ -104,7 +110,7 @@ function addcert(){
 }
 ### Function for setting password ###
 function setPass(){
-	dsmc set password $1 $1 $1
+	dsmc set password "$1" "$1" "$1"
 }
 ##################
 # Function calls #
@@ -117,5 +123,5 @@ else
 	baclientinstall
 	tbmrinstall
 	addcert
-	setPass $PASSWORD
+	setPass "$PASSWORD"
 fi
