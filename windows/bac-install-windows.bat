@@ -123,7 +123,6 @@ SET DSM_DIR=%trgt_path%\baclient
 SET DSM_LOG=%trgt_path%\baclient
 SET DSM_CONFIG=%trgt_path%\baclient\dsm.opt
 
-SET PASSWD=%TSM_PASS%
 SET PATH=%PATH%;%DSM_DIR%
 c:
 cd %trgt_path%\baclient
@@ -139,9 +138,9 @@ for /f "tokens=1,2" %%i in ('findstr /I /B node dsm.opt') do set NODE=%%j
 if not defined NODE set NODE=%computername%
 
 ::rem create services for the new environment
-dsmcutil install scheduler /name:"TSM Client Scheduler" /node:%NODE% /optfile:"%DSM_CONFIG%" /password:%PASSWD% /autostart:no /startnow:no
-dsmcutil install cad /name:"TSM Client Acceptor" /node:%NODE% /password:%PASSWD% /optfile:"%DSM_CONFIG%" /autostart:yes /startnow:no
-dsmcutil install remoteagent /name:"TSM Remote Agent" /node:%NODE% /password:%PASSWD% /optfile:"%DSM_CONFIG%" /partnername:"TSM Client Acceptor" /startnow:no
+dsmcutil install scheduler /name:"TSM Client Scheduler" /node:%NODE% /optfile:"%DSM_CONFIG%" /password:%TSM_PASS% /autostart:no /startnow:no
+dsmcutil install cad /name:"TSM Client Acceptor" /node:%NODE% /password:%TSM_PASS% /optfile:"%DSM_CONFIG%" /autostart:yes /startnow:no
+dsmcutil install remoteagent /name:"TSM Remote Agent" /node:%NODE% /password:%TSM_PASS% /optfile:"%DSM_CONFIG%" /partnername:"TSM Client Acceptor" /startnow:no
 dsmcutil update cad /name:"TSM Client Acceptor" /cadschedname:"TSM Client Scheduler"
 
 :: Now were done start service.
