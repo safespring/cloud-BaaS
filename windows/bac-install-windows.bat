@@ -69,7 +69,7 @@ set PATH=%PATH%;c:\Program Files\Common Files\Tivoli\TSM\api64\gsk8\bin\;c:\Prog
 c:
 cd %trgt_path%\baclient
 
-@echo > IPnett-Cloud-Root-CA.pem -----BEGIN CERTIFICATE-----
+@echo >  IPnett-Cloud-Root-CA.pem -----BEGIN CERTIFICATE-----
 @echo >> IPnett-Cloud-Root-CA.pem MIIFXjCCA0agAwIBAgIJAIg4TlVTvkplMA0GCSqGSIb3DQEBCwUAMF8xHDAaBgNV
 @echo >> IPnett-Cloud-Root-CA.pem BAMTE0lQbmV0dCBCYWFTIFJvb3QgQ0ExHjAcBgNVBAsTFUlQbmV0dCBDbG91ZCBT
 @echo >> IPnett-Cloud-Root-CA.pem ZXJ2aWNlczESMBAGA1UEChMJSVBuZXR0IEFCMQswCQYDVQQGEwJTRTAeFw0xNDA5
