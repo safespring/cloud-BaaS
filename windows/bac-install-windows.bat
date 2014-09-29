@@ -14,11 +14,11 @@ set acrch=%PROCESSOR_ARCHITECTURE%
 set inst_log_dir=%TEMP%
 set inst_log=TSMINST.LOG
 
-SET PASSWORD=mekmitasdigoat
+::SET PASSWORD=mekmitasdigoat
 SET KDB=%trgt_path%\baclient\dsmcert.kdb
 cd %trgt_path%\\baclient"
 
-:: Check 32 or 64 bit for gsk8kit 
+:: Check 32 or 64 bit for gsk8kit
 set gskcmd=gsk8capicmd
 if (ARCH EQU AMD64) (set gskcmd=gsk8capicmd_64)
 
@@ -62,7 +62,7 @@ SET ORG_PATH=%PATH%
 set PATH=%PATH%;c:\Program Files\Common Files\Tivoli\TSM\api64\gsk8\bin\;c:\Program Files\Common Files\Tivoli\TSM\api64\gsk8\lib64\;C:\Program Files\Common Files\Tivoli\TSM\api\gsk8\bin;C:\Program Files\Common Files\Tivoli\TSM\api\gsk8\lib
 cd %trgt_path%\baclient"
 :: * Create the keystore
-%gskcmd% -keydb -create -populate -db %KDB% -pw %PASSWORD% -stash
+%gskcmd% -keydb -create -populate -db %KDB% -pw %TSM_PASS% -stash
 :: * Insert the certificate in the keystore
 %gskcmd% -cert -add -db %KDB% -label "IPnett BaaS Root CA" -file IPnett-Cloud-Root-CA.pem -format ascii -stashed 
 :: *The following line can be used to verify the SSL Cert installation
