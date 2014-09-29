@@ -45,11 +45,11 @@ if %ERRORLEVEL% GTR 0 ( Echo Problem: %TASK% & goto Error)
 
 :: * install TSM client  32 bit
 Set TASK=Installing_TSM_CLIENT32
-if NOT (ARCH EQU AMD64) (msiexec /i %src_path%\%tsm_msi% RebootYesNo="No" REBOOT="Suppress" ALLUSERS=1 INSTALLDIR="c:\program files\tivoli\tsm" ADDLOCAL="BackupArchiveGUI,BackupArchiveWeb,ApiRuntime,AdministrativeCmd" TRANSFORMS=1033.mst /qn /l*v "%inst_log_dir%\log.txt") 
+if NOT (ARCH EQU AMD64) (msiexec /i %src_path%\%tsm_msi% RebootYesNo="No" REBOOT="Suppress" ALLUSERS=1 INSTALLDIR=%trgt_path% ADDLOCAL="BackupArchiveGUI,BackupArchiveWeb,ApiRuntime,AdministrativeCmd" TRANSFORMS=1033.mst /qn /l*v "%inst_log_dir%\log.txt") 
 if %ERRORLEVEL% GTR 0 ( Echo Problem: %TASK% & goto Error)
 :: * install TSM client 64 bit
 Set TASK=Installing_TSM_CLIENT32
-if (ARCH EQU AMD64) (msiexec /i %src_path%\%tsm_msi% RebootYesNo="No" REBOOT="Suppress" ALLUSERS=1 INSTALLDIR="c:\program files\tivoli\tsm" ADDLOCAL="BackupArchiveGUI,BackupArchiveWeb,Api64Runtime,AdministrativeCmd" TRANSFORMS=1033.mst /qn /l*v "%inst_log_dir%\log.txt")
+if (ARCH EQU AMD64) (msiexec /i %src_path%\%tsm_msi% RebootYesNo="No" REBOOT="Suppress" ALLUSERS=1 INSTALLDIR=%trgt_path% ADDLOCAL="BackupArchiveGUI,BackupArchiveWeb,Api64Runtime,AdministrativeCmd" TRANSFORMS=1033.mst /qn /l*v "%inst_log_dir%\log.txt")
 if %ERRORLEVEL% GTR 0 ( Echo Problem: %TASK% & goto Error)
 :: * Configure SSL
 Set TASK=Configuring_SSL 
@@ -78,14 +78,14 @@ dsmc set password %TSM_PASS% %TSM_PASS% %TSM_PASS%
 
 :: Create services that uses the generated password
 :: Once the BA client is installed some defaults are used.
-SET DSM_DIR=C:\Program Files\Tivoli\TSM\baclient
-SET DSM_LOG=C:\Program Files\Tivoli\TSM\baclient
-SET DSM_CONFIG=C:\Program Files\Tivoli\TSM\baclient\dsm.opt
+SET DSM_DIR=%trgt_path%\baclient
+SET DSM_LOG=%trgt_path%\baclient
+SET DSM_CONFIG=%trgt_path%\baclient\dsm.opt
 
 SET PASSWD=%TSM_PASS%
 SET PATH=%PATH%;%DSM_DIR%
 c:
-cd "C:\Program files\Tivoli\TSM\baclient"
+cd %trgt_path%\baclient
 
 :: start to clean out the old services (if any)
 dsmcutil remove /name:"TSM Client Scheduler"
