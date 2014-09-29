@@ -16,8 +16,6 @@ set inst_log=TSMINST.LOG
 
 ::SET PASSWORD=mekmitasdigoat
 SET KDB=%trgt_path%\baclient\dsmcert.kdb
-:: save working directory
-SET CURRDIR=%CD%
 c:
 cd %trgt_path%\baclient
 
@@ -69,8 +67,7 @@ set PATH=%PATH%;c:\Program Files\Common Files\Tivoli\TSM\api64\gsk8\bin\;c:\Prog
 c:
 cd %trgt_path%\baclient
 
-@echo >IPnett-Cloud-Root-CA.pem
-@echo >> IPnett-Cloud-Root-CA.pem -----BEGIN CERTIFICATE-----
+@echo >  IPnett-Cloud-Root-CA.pem -----BEGIN CERTIFICATE-----
 @echo >> IPnett-Cloud-Root-CA.pem MIIFXjCCA0agAwIBAgIJAIg4TlVTvkplMA0GCSqGSIb3DQEBCwUAMF8xHDAaBgNV
 @echo >> IPnett-Cloud-Root-CA.pem BAMTE0lQbmV0dCBCYWFTIFJvb3QgQ0ExHjAcBgNVBAsTFUlQbmV0dCBDbG91ZCBT
 @echo >> IPnett-Cloud-Root-CA.pem ZXJ2aWNlczESMBAGA1UEChMJSVBuZXR0IEFCMQswCQYDVQQGEwJTRTAeFw0xNDA5
@@ -105,13 +102,11 @@ cd %trgt_path%\baclient
 :: * Create the keystore
 %gskcmd% -keydb -create -populate -db %KDB% -pw %TSM_PASS% -stash
 :: * Insert the certificate in the keystore
-%gskcmd% -cert -add -db %KDB% -label "IPnett BaaS Root CA" -file %CURRDIR%\IPnett-Cloud-Root-CA.pem -format ascii -stashed 
+%gskcmd% -cert -add -db %KDB% -label "IPnett BaaS Root CA" -file IPnett-Cloud-Root-CA.pem -format ascii -stashed 
 :: *The following line can be used to verify the SSL Cert installation
 :: gsk8capicmd_64 -cert -list -db %KDB% -stashed
 
-:: Reset the path variable
-SET ORG_PATH=%PATH%
-
+set PATH=%ORG_PATH%
 if %ERRORLEVEL% GTR 0 ( Echo Problem: %TASK% & goto Error)
 
 :: * Set and store the password in the registry 
