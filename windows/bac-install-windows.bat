@@ -4,12 +4,12 @@
 :: * TSM client install
 :: * version 0.1 
 :: * syntax:
-:: * tsm_inst TSM_CLIENT_PASSWORD
+:: * tsm_inst TSM_NODENAME TSM_CLIENT_PASSWORD
 
 :: * Settings
 set src_path=c:\tsm_images
 set tsm_msi="IBM Tivoli Storage Manager Client.msi"
-set trgt_path=%PROGRAMFILES%\tivoli\tsm"
+set trgt_path=%PROGRAMFILES%\tivoli\tsm
 set acrch=%PROCESSOR_ARCHITECTURE%
 set inst_log_dir=%TEMP%
 set inst_log=TSMINST.LOG
@@ -17,7 +17,7 @@ set inst_log=TSMINST.LOG
 ::SET PASSWORD=mekmitasdigoat
 SET KDB=%trgt_path%\baclient\dsmcert.kdb
 c:
-cd %trgt_path%\\baclient"
+cd %trgt_path%\baclient
 
 :: Check 32 or 64 bit for gsk8kit 
 set gskcmd=gsk8capicmd
@@ -25,9 +25,12 @@ if (ARCH EQU AMD64) (set gskcmd=gsk8capicmd_64)
 
 :: * Sanity checks.
 :: * Check commandline args
-set TASK=CHECK_CMD_ARG_MISSING
+set TASK=CHECK_CMD_ARG1_MISSING
 IF [%1] EQU [] ( Echo Problem: %TASK% & goto Error)
-set TSM_PASS=%1
+set TSM_NODENAME=%1
+set TASK=CHECK_CMD_ARG2_MISSING
+IF [%1] EQU [] ( Echo Problem: %TASK% & goto Error)
+set TSM_PASS=%2
 
 :: * Check the Certificate location
 :: * Check the MSI location 
@@ -56,7 +59,7 @@ if %ERRORLEVEL% GTR 0 ( Echo Problem: %TASK% & goto Error)
 Set TASK=Configuring_SSL 
 
 :: Move the old keystore
-Mv %KDB% %KDB%.NOTIPNETT
+RENAME %KDB% %KDB%.NOTIPNETT
 :: Save the path variable 
 SET ORG_PATH=%PATH%
 
