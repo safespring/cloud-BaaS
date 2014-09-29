@@ -7,7 +7,6 @@
 :: * tsm_inst TSM_CLIENT_PASSWORD
 
 :: * Settings
-c:
 set src_path=c:\tsm_images
 set tsm_msi="IBM Tivoli Storage Manager Client.msi"
 set trgt_path=%PROGRAMFILES%\tivoli\tsm"
@@ -17,6 +16,7 @@ set inst_log=TSMINST.LOG
 
 ::SET PASSWORD=mekmitasdigoat
 SET KDB=%trgt_path%\baclient\dsmcert.kdb
+c:
 cd %trgt_path%\\baclient"
 
 :: Check 32 or 64 bit for gsk8kit 
