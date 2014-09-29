@@ -45,11 +45,11 @@ if %ERRORLEVEL% GTR 0 ( Echo Problem: %TASK% & goto Error)
 
 :: * install TSM client  32 bit
 Set TASK=Installing_TSM_CLIENT32
-if NOT (ARCH EQU AMD64) (msiexec /i %src_path%\%tsm_msi% RebootYesNo="No" REBOOT="Suppress" ALLUSERS=1 INSTALLDIR="d:\program files\tivoli\tsm" ADDLOCAL="BackupArchiveGUI,BackupArchiveWeb,ApiRuntime,AdministrativeCmd" TRANSFORMS=1033.mst /qn /l*v "%inst_log_dir%\log.txt") 
+if NOT (ARCH EQU AMD64) (msiexec /i %src_path%\%tsm_msi% RebootYesNo="No" REBOOT="Suppress" ALLUSERS=1 INSTALLDIR="c:\program files\tivoli\tsm" ADDLOCAL="BackupArchiveGUI,BackupArchiveWeb,ApiRuntime,AdministrativeCmd" TRANSFORMS=1033.mst /qn /l*v "%inst_log_dir%\log.txt") 
 if %ERRORLEVEL% GTR 0 ( Echo Problem: %TASK% & goto Error)
 :: * install TSM client 64 bit
 Set TASK=Installing_TSM_CLIENT32
-if (ARCH EQU AMD64) (msiexec /i %src_path%\%tsm_msi% RebootYesNo="No" REBOOT="Suppress" ALLUSERS=1 INSTALLDIR="d:\program files\tivoli\tsm" ADDLOCAL="BackupArchiveGUI,BackupArchiveWeb,Api64Runtime,AdministrativeCmd" TRANSFORMS=1033.mst /qn /l*v "%inst_log_dir%\log.txt")
+if (ARCH EQU AMD64) (msiexec /i %src_path%\%tsm_msi% RebootYesNo="No" REBOOT="Suppress" ALLUSERS=1 INSTALLDIR="c:\program files\tivoli\tsm" ADDLOCAL="BackupArchiveGUI,BackupArchiveWeb,Api64Runtime,AdministrativeCmd" TRANSFORMS=1033.mst /qn /l*v "%inst_log_dir%\log.txt")
 if %ERRORLEVEL% GTR 0 ( Echo Problem: %TASK% & goto Error)
 :: * Configure SSL
 Set TASK=Configuring_SSL 
