@@ -135,7 +135,6 @@ if not defined NODE set NODE=%computername%
 ::rem create services for the new environment
 dsmcutil install scheduler /name:"TSM Client Scheduler" /node:%NODE% /optfile:"%DSM_CONFIG%" /password:%TSM_PASS% /autostart:no /startnow:no
 dsmcutil install cad /name:"TSM Client Acceptor" /node:%NODE% /password:%TSM_PASS% /optfile:"%DSM_CONFIG%" /autostart:yes /startnow:no
-dsmcutil install remoteagent /name:"TSM Remote Agent" /node:%NODE% /password:%TSM_PASS% /optfile:"%DSM_CONFIG%" /partnername:"TSM Client Acceptor" /startnow:no
 dsmcutil update cad /name:"TSM Client Acceptor" /cadschedname:"TSM Client Scheduler"
 
 :: Now were done start service.
