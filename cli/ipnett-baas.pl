@@ -383,8 +383,21 @@ sub main() {
 
     die "No response from server" unless ($response);
 
-    print STDERR $response->status_line, "\n";
-    print STDERR $response->headers->as_string, "\n" if ($verbose > 1);
+    if ($verbose) {
+        print STDERR $response->status_line, "\n";
+        print STDERR $response->headers->as_string, "\n" if ($verbose > 1);
+    } else {
+        my $r = $response->code;
+        if ($r >= 200 and $r < 300) {
+            print STDERR "OK\n";
+        } elsif ($r >= 400 and $r < 500) {
+            print STDERR "Client ERROR\n";
+        } elsif ($r >= 500 and $r < 600) {
+            print STDERR "Server ERROR\n";
+        } else {
+            print STDERR $response->status_line, "\n";
+        }
+    }
 
     if ($response->header("Content-Type") =~ /^application\/json/) {
         if ($raw) {
