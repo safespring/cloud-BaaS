@@ -398,7 +398,16 @@ sub main() {
     } elsif ($response->header("Content-Type") eq "application/zip") {
         if ($filename) {
             my $fh;
+            if (-f $filename) {
+                print STDERR
+                  "$filename already exists, please remove it first.\n";
+                exit(1);
+            }
             open($fh, ">", $filename);
+            unless ($fh) {
+                print STDERR "Unable to create file: $filename\n";
+                exit(1);
+            }
             print $fh $response->content;
             close($fh);
         }
