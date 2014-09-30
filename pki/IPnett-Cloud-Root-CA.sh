@@ -1,7 +1,7 @@
 #!/bin/sh
 
-# replace PASSWORD string with some random secret (that you know)
-PASSWORD=MoghooNaeFie5sipi9aegheixiNg5che
+PASSWORD=$(mktemp -d /tmp/temp-one-time-idXXXXXXXXXXXXX)
+rmdir $PASSWORD
 
 KDB=/opt/tivoli/tsm/client/ba/bin/dsmcert.kdb
 GSK8CAPICMD=gsk8capicmd_64
