@@ -32,39 +32,39 @@
 
 ### Domains
 
-- domain: fully qualified domain name (e.g., 'example.com')
-- tag: short version of the domain name (e.g. 'example')
-- description: domain description
-- servers: list of TSM servers
-- deduplication: percent of data not stored due to deduplication (weighted
+- **domain** - fully qualified domain name (e.g., 'example.com')
+- **tag** - short version of the domain name (e.g. 'example')
+- **description** - domain description
+- **servers** - list of TSM servers
+- **deduplication** - percent of data not stored due to deduplication (weighted
   average across all TSM servers used by the domain)
 
 ### Users
 
-- identity: federated user identity
-- domain: user domain name
-- authorized\_keys: list of user's API keys
-- cost\_centers: list of acceptable cost centers for user
-- admin\_domain: set if user is domain admin
+- **identity** - federated user identity
+- **domain** - user domain name
+- **authorized\_keys** - list of user's API keys
+- **cost\_centers** - list of acceptable cost centers for user
+- **admin\_domain** - set if user is domain admin
 
 ### Keys
 
-- identity: federated user identity
-- access\_key\_id: (generated)
-- secret\_access\_key: (only readable upon creation)
-- description: key description
+- **identity** - federated user identity
+- **access\_key\_id** - (generated)
+- **secret\_access\_key** - (only readable upon creation)
+- **description** - key description
 
 ### Nodes
 
-- hostname: node hostname (FQDN, optional)
-- description: node description (optional)
-- mail: email address of node contact
-- identity: node owner identity
-- platform: node platform (operating system)
-- cost\_center: node cost center
-- locked\_by\_user: set if node is locked by the user
-- schedule: list of associated backup schedules
-- policy: node backup policy
+- **hostname** - node hostname (FQDN, optional)
+- **description** - node description (optional)
+- **mail** - email address of node contact
+- **identity** - node owner identity
+- **platform** - node platform (operating system)
+- **cost\_center** - node cost center
+- **locked\_by\_user** - set if node is locked by the user
+- **schedule** - list of associated backup schedules
+- **policy** - node backup policy
 
 The following node properties are automatically set (and cannot be changed by the user):
 
@@ -75,43 +75,43 @@ The following node properties are automatically set (and cannot be changed by th
 
 The following node properties can only be set when creating a node:
 
-- application: node application (use)
-- encryption: set if data should be encrypted before backup
-- deduplication: set if data deduplication is enabled
-- compression: set if data compression is enabled
+- **application** - node application (use)
+- **encryption** - set if data should be encrypted before backup
+- **deduplication** - set if data deduplication is enabled
+- **compression** - set if data compression is enabled
 
 The following node properties are read-only:
 
-- locked\_by\_service: set if node is locked by the provider
-- last_hostname: Last hostname reported via TSM
-- last\_ip\_address: Last IP address reported via TSM
-- last\_mac\_address: Last MAC address reported via TSM
+- **locked\_by\_service** - set if node is locked by the provider
+- **last_hostname** - Last hostname reported via TSM
+- **last\_ip\_address** - Last IP address reported via TSM
+- **last\_mac\_address** - Last MAC address reported via TSM
 
 ### Schedules
 
-- name: schedule name
-- description: schedule description
+- **name** - schedule name
+- **description** - schedule description
 
 ### Backup Policies
 
-- name: backup policy name
-- description: backup policy description
+- **name** - backup policy name
+- **description** - backup policy description
 
 ### Platforms
 
-- name: platform name
-- description: platform description
+- **name** - platform name
+- **description** - platform description
 
 ### Applications
 
-- name: application name
-- description: application description
+- **name** - application name
+- **description** - application description
 
 ### Servers
 
-- hostname: server hostname (FQDN)
-- description: server description
-- utilization: percent full (of maximum capacity)
+- **hostname** - server hostname (FQDN)
+- **description** - server description
+- **utilization** - percent full (of maximum capacity)
 
 
 ----
