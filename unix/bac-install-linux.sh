@@ -16,9 +16,11 @@
 ##########################################
 # Variable declaration                   #
 ##########################################
+GSKIT_VERSION=8.0.14.28
+TBMR_VERSION=7.1-2
 ARCH=`uname -p`
-GSKSSL=gskssl64-8.0.14.28.linux.$ARCH.rpm
-GSKCRYPT=gskcrypt64-8.0.14.28.linux.$ARCH.rpm
+GSKSSL=gskssl64-${GSKIT_VERSION}.linux.$ARCH.rpm
+GSKCRYPT=gskcrypt64-${GSKIT_VERSION}.linux.$ARCH.rpm
 if [ x"$ARCH" = x"x86_64" ]; then
     GSK_CMD=gsk8capicmd_64
 else
@@ -27,7 +29,7 @@ fi
 TIVAPI=TIVsm-API64.$ARCH.rpm
 TIVBA=TIVsm-BA.$ARCH.rpm
 BACDIR=/opt/tivoli/tsm/client/ba/bin
-TBMR=tbmr-7.1-2.$ARCH.rpm
+TBMR=tbmr-${TBMR_VERSION}.$ARCH.rpm
 KPASS=$(mktemp -d /tmp/temp-one-time-idXXXXXXXXXXXXX)
 rmdir $KPASS
 GSKLABEL="IPnett BaaS Root CA"
