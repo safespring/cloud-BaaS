@@ -16,7 +16,7 @@
 ##########################################
 # Variable declaration                   #
 ##########################################
-GSKIT_VERSION=8.0.14.28
+GSKIT_VERSION=8.0.14.43
 TBMR_VERSION=7.1-2
 ARCH=`uname -p`
 GSKSSL=gskssl64-${GSKIT_VERSION}.linux.$ARCH.rpm
