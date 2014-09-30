@@ -458,11 +458,6 @@ ipnett-baas [options] [command]
 
  Commands:
 
-    get domains
-    get users
-    get keys
-    get nodes
-    get servers
     get platforms
     get applications
     get domain [domain]
@@ -486,6 +481,12 @@ ipnett-baas [options] [command]
     delete user [username]
     delete key [key]
     delete node [nodename]
+
+    get domains  (global admin only)
+    get users    (global admin only)
+    get keys     (global admin only)
+    get nodes    (global admin only)
+    get servers  (global admin only)
 
 =head1 DESCRIPTION
 
