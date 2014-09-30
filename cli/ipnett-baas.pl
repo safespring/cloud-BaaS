@@ -173,6 +173,7 @@ sub main() {
         } elsif ($subj eq "domain") {
             my $domain = shift @ARGV;
             my $subreq = shift @ARGV;
+            my $subarg = shift @ARGV;
 
             pod2usage(-message => "Missing domain name") unless ($domain);
 
@@ -182,6 +183,8 @@ sub main() {
                 $request = rest_get("domains/$domain/users");
             } elsif ($subreq and $subreq eq "admins") {
                 $request = rest_get("domains/$domain/admins");
+            } elsif ($subreq and $subreq eq "hostname") {
+                $request = rest_get("domains/$domain/nodes?hostname=$subarg");
             } else {
                 $request = rest_get("domains/$domain");
             }
@@ -465,6 +468,7 @@ ipnett-baas [options] [command]
     get applications
     get domain [domain]
     get domain [domain] (nodes|users|admins)
+    get domain [domain] hostname [hostname]
     get user [user]
     get user [user] nodes
     get key [key]
