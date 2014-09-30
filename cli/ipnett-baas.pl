@@ -388,14 +388,17 @@ sub main() {
         print STDERR $response->headers->as_string, "\n" if ($verbose > 1);
     } else {
         my $r = $response->code;
-        if ($r >= 200 and $r < 300) {
+        if ($response->is_success) {
             print STDERR "OK\n";
-        } elsif ($r >= 400 and $r < 500) {
-            print STDERR "Client ERROR\n";
-        } elsif ($r >= 500 and $r < 600) {
-            print STDERR "Server ERROR\n";
+        } elsif ($r == 403) {
+            print STDERR
+              "FORBIDDEN (you are probably using the wrong command)\n";
+        } elsif ($r = 404) {
+            print STDERR "NOT FOUND (typo?)\n";
+        } elsif ($r >= 500) {
+            print STDERR "SERVER ERROR $r\n";
         } else {
-            print STDERR $response->status_line, "\n";
+            print STDERR "ERROR $r\n";
         }
     }
 
