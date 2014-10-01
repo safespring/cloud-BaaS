@@ -236,9 +236,11 @@ sub main() {
 
             my $hostname    = shift @ARGV;
             my $cost_center = shift @ARGV;
+            my $platform    = shift @ARGV;
 
             pod2usage(-message => "Missing host name")   unless ($hostname);
             pod2usage(-message => "Missing cost center") unless ($cost_center);
+            pod2usage(-message => "Missing platform")    unless ($platform);
 
             my $encryption    = 0;
             my $deduplication = 0;
@@ -262,6 +264,7 @@ sub main() {
                         encryption    => ($encryption ? 1 : 0),
                         deduplication => ($deduplication ? 1 : 0),
                         compression   => ($compression ? 1 : 0),
+                        platform      => $platform,
                     }
                 )
             );
@@ -476,7 +479,7 @@ ipnett-baas [options] [command]
     get node [node] (schedules|policies|config)
 
     create key [description]
-    create node [hostname] [costcenter] (encr|dedup) (comp)
+    create node [hostname] [costcenter] [platform] (encr|dedup) (comp)
     rekey node [nodename]
     lock node [nodename]
     unlock node [nodename]
