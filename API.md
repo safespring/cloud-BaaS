@@ -219,26 +219,26 @@ The following node properties are read-only:
     curl -v \
         --header "Authorization: Token dXNlcm5hbWU6cGFzc3dvcmQ" \
         -X DELETE \
-        https://api.cloud.ipnett.se/tsm/nodes/Eeph2jome7
+        https://api.cloud.ipnett.se/tsm/nodes/EEPH2JOME7
 
 #### Show backup node information
 
     curl -v \
         --header "Authorization: Token dXNlcm5hbWU6cGFzc3dvcmQ" \
-        https://api.cloud.ipnett.se/tsm/nodes/Eeph2jome7
+        https://api.cloud.ipnett.se/tsm/nodes/EEPH2JOME7
 
 #### Get TSM configuration file
 
     curl -v \
         --header "Authorization: Token dXNlcm5hbWU6cGFzc3dvcmQ" \
-        https://api.cloud.ipnett.se/tsm/nodes/Eeph2jome7/config
+        https://api.cloud.ipnett.se/tsm/nodes/EEPH2JOME7/config
 
 #### Regenerate node password
 
     curl -v \
         --header "Authorization: Token dXNlcm5hbWU6cGFzc3dvcmQ" \
         -X POST \
-        https://api.cloud.ipnett.se/tsm/nodes/Eeph2jome7/rekey
+        https://api.cloud.ipnett.se/tsm/nodes/EEPH2JOME7/rekey
 
 ### Platforms
 
@@ -271,7 +271,7 @@ The following node properties are read-only:
 
     curl -v \
         --header "Authorization: Token dXNlcm5hbWU6cGFzc3dvcmQ" \
-        https://api.cloud.ipnett.se/tsm/nodes/Eeph2jome7/schedules
+        https://api.cloud.ipnett.se/tsm/nodes/EEPH2JOME7/schedules
 
 ### Backup Policies
 
@@ -279,4 +279,4 @@ The following node properties are read-only:
 
     curl -v \
         --header "Authorization: Token dXNlcm5hbWU6cGFzc3dvcmQ" \
-        https://api.cloud.ipnett.se/tsm/nodes/Eeph2jome7/policies
+        https://api.cloud.ipnett.se/tsm/nodes/EEPH2JOME7/policies
