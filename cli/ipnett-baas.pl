@@ -432,6 +432,7 @@ sub main() {
             }
             print $fh $response->content;
             close($fh);
+            print STDERR "TSM configuration saved as $filename\n";
         }
     } else {
         print STDERR "Unknown Content-Type\n";
