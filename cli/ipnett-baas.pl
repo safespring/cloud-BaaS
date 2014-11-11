@@ -312,6 +312,14 @@ sub main() {
                 $request =
                   rest_put_json("nodes/$nodename",
                     encode_json({ platform => $subarg }));
+            } elsif ($subreq
+                and ($subreq eq "costcenter"))
+            {
+                pod2usage(-message => "Missing cost center") unless ($subarg);
+
+                $request =
+                  rest_put_json("nodes/$nodename",
+                    encode_json({ cost_center => $subarg }));
             } else {
                 pod2usage(-1);
             }
@@ -487,6 +495,7 @@ ipnett-baas [options] [command]
     set node [node] policy [policy]
     set node [node] schedule [schedule]
     set node [node] platform [platform]
+    set node [node] costcenter [cost center]
 
     delete domain [domain]
     delete user [username]
