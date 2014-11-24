@@ -302,12 +302,12 @@ The following node properties are read-only:
     curl -v \
         --header 'Authorization: Token dXNlcm5hbWU6cGFzc3dvcmQ' \
 	--header 'Content-Type: application/json' \
-	--data '{ "domain": "example.com","identity":"user@example.com","admin_domain":1,"cost_centers": ["cc1","cc2"] }' \
+	--data '{ "domain":"example.com","identity":"user@example.com","admin_domain":1,"cost_centers":["cc1","cc2"] }' \
         https://api.cloud.ipnett.se/tsm/users
 
     curl -v \
         --header 'Authorization: Token dXNlcm5hbWU6cGFzc3dvcmQ' \
 	--header 'Content-Type: application/json' \
 	--header 'Impersonate: user@example.com' \
-	--data '{ "description": "initial key" }' \
+	--data '{ "description":"initial key" }' \
         https://api.cloud.ipnett.se/tsm/keys
