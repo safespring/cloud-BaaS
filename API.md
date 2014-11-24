@@ -196,7 +196,7 @@ The following node properties are read-only:
 
     curl -v \
         --header "Authorization: Token dXNlcm5hbWU6cGFzc3dvcmQ" \
-        --data name=ipnett.se \
+        --data description"My Key" \
         https://api.cloud.ipnett.se/tsm/keys
 
 #### Delete API key
