@@ -135,6 +135,9 @@ The following node properties are read-only:
     curl -v \
         --header "Authorization: Token dXNlcm5hbWU6cGFzc3dvcmQ" \
         --data description="Example Inc." \
+	--data domain="example.com" \
+	--data tag="example" \
+	--data servers="tsm-server1.test.se" \
         https://api.cloud.ipnett.se/tsm/domains
 
 #### Show domain information (global admin, domain admin)
