@@ -30,6 +30,10 @@
 - Applications
 - Servers
 
+The following node properties are automatically set (and can never be set):
+
+- **href** - object self-references
+
 ### Domains
 
 - **domain** - fully qualified domain name (e.g., 'example.com')
