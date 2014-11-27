@@ -9,6 +9,8 @@ FETCH=		wget
 
 all:
 
+build: stunnel-${STUNNEL_VERSION}/src/stunnel
+	
 gpg-keys:
 	gpg --recv-key 74C732D1
 	gpg --recv-key 0E604491
@@ -29,12 +31,12 @@ openssl-${OPENSSL_VERSION}: ${OPENSSL_TGZ}
 stunnel-${STUNNEL_VERSION}: ${STUNNEL_TGZ}
 	tar xzf ${STUNNEL_TGZ}
 
-build-openssl: openssl-${OPENSSL_VERSION}
+openssl-${OPENSSL_VERSION}/lib/libssl.a: openssl-${OPENSSL_VERSION}
 	(cd openssl-${OPENSSL_VERSION}; \
 	./config no-shared && make; \
 	mkdir lib && install -m 444 libcrypto.a libssl.a lib)
 
-build-stunnel: stunnel-${STUNNEL_VERSION}
+stunnel-${STUNNEL_VERSION}/src/stunnel: stunnel-${STUNNEL_VERSION} openssl-${OPENSSL_VERSION}/lib/libssl.a
 	(cd stunnel-${STUNNEL_VERSION}; \
 	./configure \
 		--with-ssl=`pwd`/../openssl-${OPENSSL_VERSION} \
