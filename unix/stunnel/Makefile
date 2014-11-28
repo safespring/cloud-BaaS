@@ -5,7 +5,7 @@ OPENSSL_TGZ=	openssl-${OPENSSL_VERSION}.tar.gz
 STUNNEL_TGZ=	stunnel-${STUNNEL_VERSION}.tar.gz
 
 ROOT_CA=	../../pki/IPnett-Cloud-Root-CA.pem
-DIST_ROOT=	opt/stunnel-${STUNNEL_VERSION}
+DIST_ROOT=	distroot/opt/stunnel-${STUNNEL_VERSION}
 DIST_TGZ=	stunnel-static-${STUNNEL_VERSION}-openssl-${OPENSSL_VERSION}-$(shell arch).tar.gz
 
 FETCH=		wget --no-check-certificate --no-clobber
@@ -13,7 +13,9 @@ FETCH=		wget --no-check-certificate --no-clobber
 
 all:
 
-dist: build
+dist: ${DIST_TGZ}
+	
+${DIST_TGZ}: build
 	install -d ${DIST_ROOT}
 	install -d ${DIST_ROOT}/bin
 	install -d ${DIST_ROOT}/etc
@@ -21,7 +23,7 @@ dist: build
 	install -m 444 ${ROOT_CA} ${DIST_ROOT}/etc/stunnel-tsm.pem
 	sed "s/%%VERSION%%/${STUNNEL_VERSION}/" stunnel.conf > stunnel.conf.tmp
 	install -m 644 stunnel.conf.tmp ${DIST_ROOT}/etc/stunnel-tsm.conf
-	tar cvzf ${DIST_TGZ} ${DIST_ROOT}
+	(cd dist; tar cvzf ../${DIST_TGZ} opt)
 
 build: stunnel-${STUNNEL_VERSION}/src/stunnel
 
@@ -71,3 +73,6 @@ stunnel-${STUNNEL_VERSION}/src/stunnel: stunnel-${STUNNEL_VERSION} openssl-${OPE
 clean:
 	rm -fr openssl-*
 	rm -fr stunnel-*
+	rm -f *.tmp
+	rm -f ${DIST_TGZ}
+	rm -fr distroot
