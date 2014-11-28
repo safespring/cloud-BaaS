@@ -50,7 +50,7 @@ stunnel-${STUNNEL_VERSION}/src/stunnel: stunnel-${STUNNEL_VERSION} openssl-${OPE
 	(cd stunnel-${STUNNEL_VERSION}; \
 	./configure \
 		--with-ssl=`pwd`/../openssl-${OPENSSL_VERSION} \
-		--enable-static --disable-shared \
+		--enable-static --disable-shared --disable-libwrap \
 		--prefix /opt/stunnel-${STUNNEL_VERSION}; \
 	make)
 
