@@ -4,16 +4,26 @@ STUNNEL_VERSION=	5.07
 OPENSSL_TGZ=	openssl-${OPENSSL_VERSION}.tar.gz
 STUNNEL_TGZ=	stunnel-${STUNNEL_VERSION}.tar.gz
 
-FETCH=		wget
+FETCH=		wget --no-check-certificate --no-clobber
 
 
 all:
 
 build: stunnel-${STUNNEL_VERSION}/src/stunnel
+
+fetch: ${OPENSSL_TGZ} ${STUNNEL_TGZ}
 	
-gpg-keys:
-	gpg --recv-key 74C732D1
+fetch-gpg-keys:
 	gpg --recv-key 0E604491
+	gpg --recv-key 74C732D1
+
+import-gpg-keys:
+	gpg --import openssl.pgp
+	gpg --import stunnel.pgp
+	
+export-gpg-keys:
+	gpg --armor --export 0E604491 >openssl.pgp
+	gpg --armor --export 74C732D1 >stunnel.pgp
 
 ${OPENSSL_TGZ}:
 	${FETCH} https://www.openssl.org/source/openssl-${OPENSSL_VERSION}.tar.gz
