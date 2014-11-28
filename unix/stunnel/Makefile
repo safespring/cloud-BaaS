@@ -23,7 +23,7 @@ ${DIST_TGZ}: build
 	install -m 444 ${ROOT_CA} ${DIST_ROOT}/etc/stunnel-tsm.pem
 	sed "s/%%VERSION%%/${STUNNEL_VERSION}/" stunnel.conf > stunnel.conf.tmp
 	install -m 644 stunnel.conf.tmp ${DIST_ROOT}/etc/stunnel-tsm.conf
-	(cd dist; tar cvzf ../${DIST_TGZ} opt)
+	(cd distroot; tar cvzf ../${DIST_TGZ} opt)
 
 build: stunnel-${STUNNEL_VERSION}/src/stunnel
 
