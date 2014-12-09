@@ -3,7 +3,7 @@
 # replace PASSWORD string with some random secret (that you know)
 PASSWORD=MoghooNaeFie5sipi9aegheixiNg5che
 
-KDB="/Library/Application Support/tivoli/tsm/client/ba/bin/dsmcert.db"
+KDB="/Library/Application Support/tivoli/tsm/client/ba/bin/dsmcert.kdb"
 GSK8CAPICMD=/Library/ibm/gsk8/bin/gsk8capicmd
 
 $GSK8CAPICMD -keydb -create -db "$KDB" -pw "$PASSWORD" -stash
