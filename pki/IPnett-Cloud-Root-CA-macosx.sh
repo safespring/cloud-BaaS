@@ -10,6 +10,6 @@ $GSK8CAPICMD -keydb -create -db "$KDB" -pw "$PASSWORD" -stash
 
 $GSK8CAPICMD -cert -add -db "$KDB" -format ascii -stashed \
     -label "IPnett BaaS Root CA" \
-    -file /tmp/IPnett-Cloud-Root-CA.pem \
+    -file ./IPnett-Cloud-Root-CA.pem
 
 $GSK8CAPICMD -cert -list -db "$KDB" -stashed
