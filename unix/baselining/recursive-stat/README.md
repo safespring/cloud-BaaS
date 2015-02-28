@@ -17,6 +17,6 @@ whether a file has changed or not, is limited by this performance of a system.
 ## Usage example
 
     # Clear dirty objects and then free all cached pages, dentries and inodes
-    sudo sync ; sudo echo 3 > /proc/sys/vm/drop_caches
+    sudo sync ; sudo sh -c "echo 3 > /proc/sys/vm/drop_caches"
     # run the tool
     ./recursive-stat /
