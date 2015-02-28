@@ -1,7 +1,7 @@
 // file system stat() timing tester.
 // Copyright 2014 Martin Millnert, IPnett AB
-// Based on http://rosettacode.org/wiki/Walk_a_directory/Recursively#Library:_POSIX 
-// http://stackoverflow.com/questions/7035733/unix-c-program-to-list-directories-recursively 
+// Based on http://rosettacode.org/wiki/Walk_a_directory/Recursively#Library:_POSIX
+// http://stackoverflow.com/questions/7035733/unix-c-program-to-list-directories-recursively
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -13,7 +13,6 @@
 #include <string.h>
 #include <errno.h>
 #include <err.h>
-//#include <time.h>
 
 enum {
 	WALK_OK = 0,
@@ -32,7 +31,7 @@ enum {
 int files_matched = 0;
 int opendirs = 0, stats = 0;
 double opendirtime = 0, statstime = 0;
-int do_print = 0; // 0 == false, 1 == true
+int do_print = 0;
 const char *COUNT_FMTSTRING = "\rFiles stat()'ed: %d";
 
 int walk_recur(char *dirname, regex_t *reg, int spec)
@@ -85,7 +84,7 @@ int walk_recur(char *dirname, regex_t *reg, int spec)
 			warn("File name %s/__'%s'__ too long", dirname, filename);
 			continue;		// file name too long
 		}
-		if ((!(spec & WS_DOTFILES) && filename[0] == '.') || 
+		if ((!(spec & WS_DOTFILES) && filename[0] == '.') ||
 		    (filename[0] == '.' || !strcmp(filename, ".."))) {
 			gettimeofday(&dt0, 0);
 			continue;
@@ -98,7 +97,7 @@ int walk_recur(char *dirname, regex_t *reg, int spec)
 			elapsed = (st1.tv_sec-st0.tv_sec)*1000000LL + st1.tv_usec-st0.tv_usec;
 			elapsed_s = elapsed/(double)1000000;
 			opendirtime += elapsed_s;
-			warn("Can't stat '%s':  dirname: %lu, filename: %lu, fullpath: %lu", 
+			warn("Can't stat '%s':  dirname: %lu, filename: %lu, fullpath: %lu",
 				fullpath, &dirname, &filename, &fullpath);
 			res = WALK_BADIO;
 			gettimeofday(&dt0, 0);
@@ -118,7 +117,7 @@ int walk_recur(char *dirname, regex_t *reg, int spec)
 		/* will be false for symlinked dirs */
 		if (S_ISDIR(st.st_mode)) {
 			if ((dlen + flen + 3) < (PATH_MAX-1)) {
-				snprintf(fullpath, (size_t)flen + dlen + 4, 
+				snprintf(fullpath, (size_t)flen + dlen + 4,
 					 "%s%s/", dirname, filename);
 			}
 			/* recursively follow dirs */
@@ -160,8 +159,6 @@ int walk_dir(char *dirname, char *pattern, int spec)
 
 int listdir(char *startdir, char *pattern)
 {
-	//int r = walk_dir(".", ".\\.c$", WS_DEFAULT|WS_MATCHDIRS);
-
 	struct timeval t0, t1;
 
 	gettimeofday(&t0, 0);
@@ -198,14 +195,13 @@ int listdir(char *startdir, char *pattern)
 
 int main(int argc, char *argv[])
 {
-  if(argc < 2)
-  {
-    printf("usage: %s <directory>\n", argv[0]);
-    return 0;
-  }
-  char *pattern = ".*";
-  char *startdir = argv[1];
+	if(argc < 2) {
+		printf("usage: %s <directory>\n", argv[0]);
+		return 0;
+	}
+	char *pattern = ".*";
+	char *startdir = argv[1];
 
-  listdir(startdir, pattern);
-  return 0;
+	listdir(startdir, pattern);
+	return 0;
 }
