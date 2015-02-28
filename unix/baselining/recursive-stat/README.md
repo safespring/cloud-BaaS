@@ -19,4 +19,4 @@ whether a file has changed or not, is limited by this performance of a system.
     # Clear dirty objects and then free all cached pages, dentries and inodes
     sudo sync ; sudo sh -c "echo 3 > /proc/sys/vm/drop_caches"
     # run the tool
-    ./recursive-stat /
+    sudo ./recursive-stat /
