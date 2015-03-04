@@ -14,8 +14,4 @@ $GSK8CAPICMD -cert -add -db "$KDB" -format ascii -stashed \
 	-label "IPnett BaaS Root CA" \
 	-file ./IPnett-Cloud-Root-CA.pem
 
-$GSK8CAPICMD -cert -add -db "$KDB" -format ascii -stashed \
-	-label "IPnett Cloud Legacy CA" \
-	-file IPnett-Cloud-Legacy-CA.pem \
-
 $GSK8CAPICMD -cert -list -db "$KDB" -stashed
