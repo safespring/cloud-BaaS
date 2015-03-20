@@ -1,0 +1,22 @@
+release stunnel-static-5.13-openssl-1.0.1m:
+
+	- second release, using:
+		* openssl-1.0.1m
+		* stunnel-5.0.7
+	- security fixes in openssl:
+	  https://github.com/openssl/openssl/blob/OpenSSL_1_0_1-stable/CHANGES
+	- security fixes in stunnel:
+	  https://www.stunnel.org/sdf_ChangeLog.html
+	- updates incorporated IPneet BaaS CA cert
+	- statically configured for tsm1-v4.cloud.ipnett.se
+	  works around bug with older RHEL/CentOS where stunnel tries to connect to
+	  all tsm1.cloud.ipnett.se A/AAAA RRs in a round-robin fashion, regardless
+	  of what connectivity OS actually has.
+
+release stunnel-static-5.07-openssl-1.0.1j:
+
+	- first release, using:
+		* openssl-1.0.1j
+		* stunnel-5.0.7
+	- incorporates IPnett BaaS CA cert
+	- statically configured for tsm1.cloud.ipnett.se
