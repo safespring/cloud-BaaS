@@ -1,5 +1,5 @@
-OPENSSL_VERSION=	1.0.1l
-STUNNEL_VERSION=	5.11
+OPENSSL_VERSION=	1.0.1m
+STUNNEL_VERSION=	5.13
 
 OPENSSL_TGZ=	openssl-${OPENSSL_VERSION}.tar.gz
 STUNNEL_TGZ=	stunnel-${STUNNEL_VERSION}.tar.gz
@@ -14,7 +14,7 @@ FETCH=		wget --no-check-certificate --no-clobber
 all:
 
 dist: ${DIST_TGZ}
-	
+
 ${DIST_TGZ}: build
 	install -d ${DIST_ROOT}
 	install -d ${DIST_ROOT}/bin
@@ -28,18 +28,18 @@ ${DIST_TGZ}: build
 build: stunnel-${STUNNEL_VERSION}/src/stunnel
 
 fetch: ${OPENSSL_TGZ} ${STUNNEL_TGZ}
-	
+
 fetch-gpg-keys:
 	gpg --recv-key 0E604491
-	gpg --recv-key 74C732D1
+	gpg --recv-key D416E014
 
 import-gpg-keys:
 	gpg --import openssl.pgp
 	gpg --import stunnel.pgp
-	
+
 export-gpg-keys:
 	gpg --armor --export 0E604491 >openssl.pgp
-	gpg --armor --export 74C732D1 >stunnel.pgp
+	gpg --armor --export D416E014 >stunnel.pgp
 
 ${OPENSSL_TGZ}:
 	${FETCH} https://www.openssl.org/source/openssl-${OPENSSL_VERSION}.tar.gz
@@ -47,8 +47,8 @@ ${OPENSSL_TGZ}:
 	gpg --verify openssl-*.tar.gz.asc
 
 ${STUNNEL_TGZ}:
-	${FETCH} https://www.stunnel.org/downloads/stunnel-${STUNNEL_VERSION}.tar.gz
-	${FETCH} https://www.stunnel.org/downloads/stunnel-${STUNNEL_VERSION}.tar.gz.asc
+	${FETCH} https://www.stunnel.org/downloads/archive/5.x/stunnel-${STUNNEL_VERSION}.tar.gz
+	${FETCH} https://www.stunnel.org/downloads/archive/5.x/stunnel-${STUNNEL_VERSION}.tar.gz.asc
 	gpg --verify stunnel-*.tar.gz.asc
 
 openssl-${OPENSSL_VERSION}: ${OPENSSL_TGZ}
@@ -59,7 +59,7 @@ stunnel-${STUNNEL_VERSION}: ${STUNNEL_TGZ}
 
 openssl-${OPENSSL_VERSION}/lib/libssl.a: openssl-${OPENSSL_VERSION}
 	(cd openssl-${OPENSSL_VERSION}; \
-	./config no-shared && make; \
+	./config no-shared no-zlib && make; \
 	mkdir lib && install -m 444 libcrypto.a libssl.a lib)
 
 stunnel-${STUNNEL_VERSION}/src/stunnel: stunnel-${STUNNEL_VERSION} openssl-${OPENSSL_VERSION}/lib/libssl.a
@@ -68,7 +68,11 @@ stunnel-${STUNNEL_VERSION}/src/stunnel: stunnel-${STUNNEL_VERSION} openssl-${OPE
 		--with-ssl=`pwd`/../openssl-${OPENSSL_VERSION} \
 		--enable-static --disable-shared --disable-libwrap \
 		--prefix /opt/stunnel-${STUNNEL_VERSION}; \
-	make)
+        find . -name Makefile \
+          -exec sed -i 's/^LDFLAGS\(.*\)-Wl,-z,relro.*/LDFLAGS\1/g' {} \; \
+          -exec sed -i 's/^CFLAGS =/CFLAGS = -fPIC/g' {} \; \
+          -exec sed -i 's/^LIBS = -lz/LIBS =/g' {} \; ;\
+        make)
 
 clean:
 	rm -fr openssl-*
