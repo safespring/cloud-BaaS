@@ -59,7 +59,10 @@ stunnel-${STUNNEL_VERSION}: ${STUNNEL_TGZ}
 
 openssl-${OPENSSL_VERSION}/lib/libssl.a: openssl-${OPENSSL_VERSION}
 	(cd openssl-${OPENSSL_VERSION}; \
-	./config no-shared no-zlib && make; \
+	./config no-shared no-dynamic -fPIC ; \
+	sed -i 's/^SHARED_LDFLAGS/SHARED_LDFLAGS="-Wl,-z,relro -Wl,-z,now"' Makefile ; \
+	make ${MAKEFLAGS} depend; \
+	make ${MAKEFLAGS}; \
 	mkdir lib && install -m 444 libcrypto.a libssl.a lib)
 
 stunnel-${STUNNEL_VERSION}/src/stunnel: stunnel-${STUNNEL_VERSION} openssl-${OPENSSL_VERSION}/lib/libssl.a
@@ -69,10 +72,12 @@ stunnel-${STUNNEL_VERSION}/src/stunnel: stunnel-${STUNNEL_VERSION} openssl-${OPE
 		--enable-static --disable-shared --disable-libwrap \
 		--prefix /opt/stunnel-${STUNNEL_VERSION}; \
         find . -name Makefile \
-          -exec sed -i 's/^LDFLAGS\(.*\)-Wl,-z,relro.*/LDFLAGS\1/g' {} \; \
-          -exec sed -i 's/^CFLAGS =/CFLAGS = -fPIC/g' {} \; \
-          -exec sed -i 's/^LIBS = -lz/LIBS =/g' {} \; ;\
-        make)
+          -exec sed -i 's/^CFLAGS =/CFLAGS = -fPIC/g' {} \; ;\
+        make ${MAKEFLAGS})
+
+clean-build:
+	(cd openssl-${OPENSSL_VERSION}; make clean ; rm -rf lib)
+	(cd stunnel-${STUNNEL_VERSION}; make clean)
 
 clean:
 	rm -fr openssl-*
