@@ -17,6 +17,7 @@
 - All operations (GET/POST/PUT/DELETE) may be authenticated using an
   Authorization header of type Token.
 - Plain HTTP Basic Authentication may be used for GET operations.
+- Token is e.g. the output of `echo -n $AccessKey:$SecretKey | openssl enc -e -base64`
 
 ## Resources
 
@@ -262,7 +263,7 @@ The following node properties are read-only:
     curl -v \
         --header "Authorization: Token dXNlcm5hbWU6cGFzc3dvcmQ" \
         https://api.cloud.ipnett.se/tsm/applications
-	
+
 ### Servers
 
 #### List all available servers (global admin)
