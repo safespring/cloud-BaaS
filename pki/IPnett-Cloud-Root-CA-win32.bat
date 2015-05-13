@@ -1,7 +1,11 @@
 @echo off
 
 :: replace PASSWORD string with some random secret (that you know)
-PASSWORD=MoghooNaeFie5sipi9aegheixiNg5che
+set PASSWORD=REPLACEME
+if [%PASSWORD%] equ [REPLACEME] ( 
+	echo No password set.  Please set a random password. 
+	exit /B
+)
 
 KDB="C:\Program Files\Tivoli\TSM\baclient\dsmcert.kdb"
 GSK8CAPICMD="C:\Program Files\Common Files\Tivoli\TSM\api\gsk8\bin\gsk8capicmd"
