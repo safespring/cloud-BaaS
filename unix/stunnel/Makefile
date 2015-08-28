@@ -44,12 +44,12 @@ export-gpg-keys:
 ${OPENSSL_TGZ}:
 	${FETCH} https://www.openssl.org/source/openssl-${OPENSSL_VERSION}.tar.gz
 	${FETCH} https://www.openssl.org/source/openssl-${OPENSSL_VERSION}.tar.gz.asc
-	gpg --verify openssl-*.tar.gz.asc || sha256sum -c SHA256
+	gpg --verify openssl-*.tar.gz.asc || sha256sum -c SHA256.openssl
 
 ${STUNNEL_TGZ}:
 	${FETCH} https://www.stunnel.org/downloads/archive/5.x/stunnel-${STUNNEL_VERSION}.tar.gz
 	${FETCH} https://www.stunnel.org/downloads/archive/5.x/stunnel-${STUNNEL_VERSION}.tar.gz.asc
-	gpg --verify stunnel-*.tar.gz.asc || sha256sum -c SHA256
+	gpg --verify stunnel-*.tar.gz.asc || sha256sum -c SHA256.stunnel
 
 openssl-${OPENSSL_VERSION}: ${OPENSSL_TGZ}
 	tar xzf ${OPENSSL_TGZ}
