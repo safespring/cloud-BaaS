@@ -1,5 +1,6 @@
 OPENSSL_VERSION=	1.0.1m
 STUNNEL_VERSION=	5.13
+# Remember to fix SHA256 files when bumping openssl or stunnel version
 
 OPENSSL_TGZ=	openssl-${OPENSSL_VERSION}.tar.gz
 STUNNEL_TGZ=	stunnel-${STUNNEL_VERSION}.tar.gz
@@ -41,9 +42,11 @@ export-gpg-keys:
 	gpg --armor --export 0E604491 >openssl.pgp
 	gpg --armor --export D416E014 >stunnel.pgp
 
+# Prefer https, fallback if https fails.
+
 ${OPENSSL_TGZ}:
-	${FETCH} https://www.openssl.org/source/openssl-${OPENSSL_VERSION}.tar.gz
-	${FETCH} https://www.openssl.org/source/openssl-${OPENSSL_VERSION}.tar.gz.asc
+	${FETCH} https://www.openssl.org/source/openssl-${OPENSSL_VERSION}.tar.gz || ${FETCH} http://www.openssl.org/source/openssl-${OPENSSL_VERSION}.tar.gz
+	${FETCH} https://www.openssl.org/source/openssl-${OPENSSL_VERSION}.tar.gz.asc || ${FETCH} http://www.openssl.org/source/openssl-${OPENSSL_VERSION}.tar.gz.asc
 	gpg --verify openssl-*.tar.gz.asc || sha256sum -c SHA256.openssl
 
 ${STUNNEL_TGZ}:
