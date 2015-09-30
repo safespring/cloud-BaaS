@@ -12,10 +12,10 @@ For your convinience, here is a cut-n-past-friendly-command:
 
     curl -o /etc/pki/rpm-gpg/RPG-GPG-KEY-ipnett \
     https://raw.githubusercontent.com/IPnett/cloud-BaaS/master/unix/rpm/RPM-GPG-KEY-ipnett
-    rpmkeys —import /etc/pki/rpm-gpg/RPG-GPG-KEY-ipnett/RPM-GPG-KEY-ipnett
+      rpmkeys —import /etc/pki/rpm-gpg/RPG-GPG-KEY-ipnett/RPM-GPG-KEY-ipnett
 
     curl -o /etc/yum.repos.d/ipnett-el6.repo \
-    https://raw.githubusercontent.com/IPnett/cloud-BaaS/master/unix/rpm/ipnett-el6.repo
+      https://raw.githubusercontent.com/IPnett/cloud-BaaS/master/unix/rpm/ipnett-el6.repo
 
 
 ## RedHat Enterprise Linux 7
@@ -29,7 +29,7 @@ For your convinience, here is a cut-n-past-friendly-command:
 
     curl -o /etc/pki/rpm-gpg/RPG-GPG-KEY-ipnett \
     https://raw.githubusercontent.com/IPnett/cloud-BaaS/master/unix/rpm/RPM-GPG-KEY-ipnett
-    rpmkeys —import /etc/pki/rpm-gpg/RPG-GPG-KEY-ipnett/RPM-GPG-KEY-ipnett
+      rpmkeys —import /etc/pki/rpm-gpg/RPG-GPG-KEY-ipnett/RPM-GPG-KEY-ipnett
 
     curl -o /etc/yum.repos.d/ipnett-el7.repo \
-    https://raw.githubusercontent.com/IPnett/cloud-BaaS/master/unix/rpm/ipnett-el7.repo
+      https://raw.githubusercontent.com/IPnett/cloud-BaaS/master/unix/rpm/ipnett-el7.repo
