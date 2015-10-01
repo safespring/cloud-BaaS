@@ -31,3 +31,4 @@ For your convinience, here is a cut-n-paste-friendly-command:
     rpmkeys --import /etc/pki/rpm-gpg/RPG-GPG-KEY-IPnett
     curl -o /etc/yum.repos.d/ipnett-el7.repo \
       https://raw.githubusercontent.com/IPnett/cloud-BaaS/master/unix/rpm/ipnett-el7.repo
+
