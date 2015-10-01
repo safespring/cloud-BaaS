@@ -10,7 +10,7 @@ To enable the repos, you need to first install the repo file in
 
 For your convinience, here is a cut-n-paste-friendly-command:
 
-    curl -o /etc/pki/rpm-gpg/RPG-GPG-KEY-ipnett \
+    curl -o /etc/pki/rpm-gpg/RPG-GPG-KEY-IPnett \
       https://raw.githubusercontent.com/IPnett/cloud-BaaS/master/unix/rpm/RPM-GPG-KEY-IPnett
     rpm --import /etc/pki/rpm-gpg/RPG-GPG-KEY-IPnett
     curl -o /etc/yum.repos.d/ipnett-el6.repo \
