@@ -2,16 +2,19 @@
 name=IPnett Cloud Services published RPMs for RHEL6
 baseurl=https://repo.cloud.ipnett.com/rpm/ipnett-baas-el6
 enabled=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-IPnett
 gpgcheck=1
 
 [ipnett-baas-tsm]
 name=IPnett Cloud Services published RPMs for TSM
 baseurl=https://repo.cloud.ipnett.com/rpm/ipnett-baas-tsm
 enabled=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-IPnett
 gpgcheck=1
 
 [ipnett-baas-tbmr]
 name=IPnett Cloud Services published RPMs for TBMR
 baseurl=https://repo.cloud.ipnett.com/rpm/ipnett-baas-tbmr
 enabled=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-IPnett
 gpgcheck=1
