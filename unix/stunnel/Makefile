@@ -105,7 +105,7 @@ openssl-${OPENSSL_VERSION}/lib/libssl.a: openssl-${OPENSSL_VERSION}
 	mkdir lib && install -m 444 libcrypto.a libssl.a lib)
 
 stunnel-${STUNNEL_VERSION}/src/stunnel: stunnel-${STUNNEL_VERSION} openssl-${OPENSSL_VERSION}/lib/libssl.a
-	(cd stunnel-${STUNNEL_VERSION}; \
+	cd stunnel-${STUNNEL_VERSION}; \
 	./configure \
 		--with-ssl=`pwd`/../openssl-${OPENSSL_VERSION} \
 		--enable-static --disable-shared --disable-libwrap \
