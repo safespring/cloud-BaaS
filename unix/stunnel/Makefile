@@ -99,7 +99,7 @@ stunnel-${STUNNEL_VERSION}: ${STUNNEL_TGZ}
 openssl-${OPENSSL_VERSION}/lib/libssl.a: openssl-${OPENSSL_VERSION}
 	(cd openssl-${OPENSSL_VERSION}; \
 	./config no-shared no-dynamic -fPIC ; \
-	sed -i 's/^SHARED_LDFLAGS/SHARED_LDFLAGS="-Wl,-z,relro -Wl,-z,now"' Makefile ; \
+	sed -i 's/^SHARED_LDFLAGS/SHARED_LDFLAGS="-Wl,-z,relro -Wl,-z,now"/g' Makefile ; \
 	make ${MAKEFLAGS} depend && \
 	make ${MAKEFLAGS} && \
 	mkdir lib && install -m 444 libcrypto.a libssl.a lib)
