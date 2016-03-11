@@ -1,0 +1,9 @@
+client = yes
+debug = 4
+
+[cleartext-tsm]
+client = yes
+accept = 127.0.0.1:1800
+connect = %%TSMSERVER%%:1600
+verify = 2
+CAfile = /opt/stunnel/etc/stunnel-tsm.pem

@@ -13,7 +13,7 @@ PGP_KEYIDS=		0E604491 D416E014
 # Stunnel signing key: D416E014
 
 ROOT_CA=	../../pki/IPnett-Cloud-Root-CA.pem
-DIST_ROOT=	distroot/opt/stunnel-${STUNNEL_VERSION}
+DIST_ROOT=	distroot/opt/stunnel
 DIST_TGZ=	stunnel-static-${STUNNEL_VERSION}-openssl-${OPENSSL_VERSION}-$(shell arch).tar.gz
 
 FETCH=		wget --no-check-certificate --no-clobber
@@ -41,8 +41,7 @@ ${DIST_TGZ}: build
 	install -d ${DIST_ROOT}/etc
 	install -m 555 stunnel-${STUNNEL_VERSION}/src/stunnel ${DIST_ROOT}/bin
 	install -m 444 ${ROOT_CA} ${DIST_ROOT}/etc/stunnel-tsm.pem
-	sed "s/%%VERSION%%/${STUNNEL_VERSION}/" stunnel.conf > stunnel.conf.tmp
-	install -m 644 stunnel.conf.tmp ${DIST_ROOT}/etc/stunnel-tsm.conf
+	install -m 644 stunnel.conf.template ${DIST_ROOT}/etc
 	(cd distroot; tar cvzf ../${DIST_TGZ} opt)
 
 build: depends gpg-keys stunnel-${STUNNEL_VERSION}/src/stunnel
