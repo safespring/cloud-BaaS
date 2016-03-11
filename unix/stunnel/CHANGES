@@ -1,3 +1,15 @@
+release stunnel-static-5.31-openssl-1.0.2g:
+
+	- third release, using:
+		* openssl-1.0.2g
+		* stunnel-5.31
+	- changed to openssl-1.0.2g as it is new LTS branch
+	- security fixes in openssl:
+	  https://github.com/openssl/openssl/blob/OpenSSL_1_0_2-stable/CHANGES
+	- security fixes in stunnel:
+	  https://www.stunnel.org/sdf_ChangeLog.html
+	- remains statically configured for tsm1-v4.cloud.ipnett.se
+
 release stunnel-static-5.13-openssl-1.0.1m:
 
 	- second release, using:
