@@ -100,8 +100,8 @@ openssl-${OPENSSL_VERSION}/lib/libssl.a: openssl-${OPENSSL_VERSION}
 	(cd openssl-${OPENSSL_VERSION}; \
 	./config no-shared no-dynamic -fPIC ; \
 	sed -i 's/^SHARED_LDFLAGS/SHARED_LDFLAGS="-Wl,-z,relro -Wl,-z,now"/g' Makefile ; \
-	make ${MAKEFLAGS} depend && \
-	make ${MAKEFLAGS} && \
+	make depend && \
+	make && \
 	mkdir lib && install -m 444 libcrypto.a libssl.a lib)
 
 stunnel-${STUNNEL_VERSION}/src/stunnel: stunnel-${STUNNEL_VERSION} openssl-${OPENSSL_VERSION}/lib/libssl.a
@@ -112,7 +112,7 @@ stunnel-${STUNNEL_VERSION}/src/stunnel: stunnel-${STUNNEL_VERSION} openssl-${OPE
 		--prefix /opt/stunnel-${STUNNEL_VERSION}; \
         find . -name Makefile \
           -exec sed -i 's/^CFLAGS =/CFLAGS = -fPIC/g' {} \; ;\
-        make ${MAKEFLAGS})
+        make
 
 clean-build:
 	(cd openssl-${OPENSSL_VERSION}; make clean ; rm -rf lib)
