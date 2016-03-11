@@ -41,7 +41,7 @@ ${DIST_TGZ}: build
 	install -d ${DIST_ROOT}/etc
 	install -m 555 stunnel-${STUNNEL_VERSION}/src/stunnel ${DIST_ROOT}/bin
 	install -m 444 ${ROOT_CA} ${DIST_ROOT}/etc/stunnel-tsm.pem
-	install -m 644 stunnel.conf.template ${DIST_ROOT}/etc
+	install -m 644 stunnel.conf.template ${DIST_ROOT}/etc/stunnel-tsm.conf.template
 	(cd distroot; tar cvzf ../${DIST_TGZ} opt)
 
 build: depends gpg-keys stunnel-${STUNNEL_VERSION}/src/stunnel
