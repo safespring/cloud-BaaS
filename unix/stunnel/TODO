@@ -1,3 +1,0 @@
-Package for debian:
- - define common changelog, YAML-structure, with simple script to generate
-   both RPM changelog and Debian changelog
