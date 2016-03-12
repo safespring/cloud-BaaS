@@ -1,3 +1,10 @@
+.PHONY:	stunnel-clean-build stunnel-clean-dist stunnel-depends stunnel-depends-el stunnel-build \
+	rpm rpm-clean rpm-build rpm-deps
+
+################
+# stunnel data #
+################
+
 OPENSSL_VERSION=	1.0.2g
 STUNNEL_VERSION=	5.31
 # Release update process:
@@ -22,20 +29,56 @@ GNUPGHOME=	gnupg
 GPG_PUBRING=	./stunnel-pubring.gpg
 GPG_COMMAND=	GNUPGHOME=$(GNUPGHOME) gpg --no-options --no-default-keyring --keyserver=hkp://keys.gnupg.net --keyring $(GPG_PUBRING)
 
-DEPS_EL=	gcc gnupg
+DEPS_DEB=	gcc gnupg python python-dateutil
+DEPS_EL=	gcc gnupg python python-dateutil
 
-all:
+######################
+# rpm packaging data #
+######################
 
-depends: depends-el
+VERSION ?= 	0.3
+BUILD_NUMBER = 	1
+NAME = 		ipnett-baas-stunnel
+PWD = 		$(shell pwd)
 
-depends-el:
-	# IF WE ARE EL
-	sudo yum makecache
-	sudo yum install -y $(DEPS_EL)
+TOPDIR =	$(PWD)/rpmbuild
+SOURCES =	$(TOPDIR)/SOURCES
+BUILD =		$(PWD)
+BUILDROOT =	$(TOPDIR)/BUILDROOT
+RPMS =		$(TOPDIR)/RPMS
+SRPMS =		$(TOPDIR)/SRPMS
 
-dist: ${DIST_TGZ}
+SPECFILE =	$(NAME).spec
 
-${DIST_TGZ}: build
+RPMBUILD =	rpmbuild -v -bb \
+			--define "_unpackaged_files_terminate_build 0" \
+			--define "_rpmdir $(RPMS)" \
+			--define "_builddir $(BUILD)" \
+			--define "_topdir $(TOPDIR)"
+
+#############################
+#  stunnel compilation part #
+#############################
+
+all:	build dist
+
+stunnel-depends: stunnel-depends-el
+
+stunnel-depends-el:
+	# /etc/lsb-release indicates Debian[-derivative]
+	if [ -f /etc/lsb-release ]; then \
+		sudo apt-get update ; \
+		sudo apt-get install $(DEPS_DEB) ; \
+	fi
+	# /etc/redhat-release indicates EL-platform
+	if [ -f /etc/redhat-release ]; then \
+		sudo yum makecache ; \
+		sudo yum install -y $(DEPS_EL) ; \
+	fi
+
+stunnel-dist: ${DIST_TGZ}
+
+${DIST_TGZ}: stunnel-build
 	install -d ${DIST_ROOT}
 	install -d ${DIST_ROOT}/bin
 	install -d ${DIST_ROOT}/etc
@@ -44,7 +87,7 @@ ${DIST_TGZ}: build
 	install -m 644 stunnel.conf.template ${DIST_ROOT}/etc/stunnel-tsm.conf.template
 	(cd distroot; tar cvzf ../${DIST_TGZ} opt)
 
-build: depends gpg-keys stunnel-${STUNNEL_VERSION}/src/stunnel
+stunnel-build: stunnel-depends gpg-keys stunnel-${STUNNEL_VERSION}/src/stunnel
 
 fetch: ${OPENSSL_TGZ} ${STUNNEL_TGZ}
 
@@ -113,14 +156,59 @@ stunnel-${STUNNEL_VERSION}/src/stunnel: stunnel-${STUNNEL_VERSION} openssl-${OPE
           -exec sed -i 's/^CFLAGS =/CFLAGS = -fPIC/g' {} \; ;\
         make
 
-clean-build:
+stunnel-clean-build:
 	(cd openssl-${OPENSSL_VERSION}; make clean ; rm -rf lib)
 	(cd stunnel-${STUNNEL_VERSION}; make clean)
 
-clean:
+stunnel-clean-dist:
 	rm -rf openssl-*
 	rm -rf stunnel-*
 	rm -f *.tmp
 	rm -f *.pgp.asc
 	rm -f ${DIST_TGZ}
 	rm -rf distroot gnupg
+
+
+######################
+# rpm packaging part #
+######################
+
+$(TOPDIR):
+	install -d $@
+
+$(SOURCES): $(TOPDIR)
+	install -d $@
+
+$(BUILD): $(TOPDIR)
+	install -d $@
+
+$(BUILDROOT): $(TOPDIR)
+	install -d $@
+
+$(RPMS): $(TOPDIR)
+	install -d $@
+
+$(SRPMS): $(TOPDIR)
+	install -d $@
+
+rpm-dirs: $(SOURCES) $(BUILD) $(BUILDROOT) $(RPMS) $(SRPMS)
+
+rpm-deps:
+	sudo yum install -y git
+
+rpm-build: rpm-deps
+	$(RPMBUILD) $(SPECFILE)
+	mv $(RPMS)/*/*.rpm .
+
+rpm-clean:
+	rm -rf rpmbuild changes.rpm
+
+rpm:	rpm-clean rpm-build
+
+#####################
+# Common clean part #
+#####################
+
+clean:	rpm-clean stunnel-clean
+
+clean-dist: rpm-clean stunnel-clean-dist
