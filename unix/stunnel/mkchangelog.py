@@ -23,7 +23,8 @@ def render_rpm_changelog(changes):
     * Tue May 08 2001 Peter Tosh <tosh@reggae.com> 1.3-1
     - updated to 1.3
     """
-    for item in reversed(changes):
+    changes.reverse()
+    for item in changes:
         timestamp = parser.parse(item['date'])
         # pylint: disable=maybe-no-member
         item['rpmdate'] = timestamp.strftime("%a %b %d %Y")

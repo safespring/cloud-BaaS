@@ -1,7 +1,7 @@
-Name:           ipnett-stunnel
+Name:           ipnett-baas-stunnel
 Version:        0.3
 Release:        1
-Summary:        ipnett-stunnel
+Summary:        TLS 1.2 wrapper for older Linux platforms.
 BuildArch:      %{_arch}
 
 Group:          Applications/Internet

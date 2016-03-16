@@ -29,8 +29,8 @@ GNUPGHOME=	gnupg
 GPG_PUBRING=	./stunnel-pubring.gpg
 GPG_COMMAND=	GNUPGHOME=$(GNUPGHOME) gpg --no-options --no-default-keyring --keyserver=hkp://keys.gnupg.net --keyring $(GPG_PUBRING)
 
-DEPS_DEB=	gcc gnupg python python-dateutil
-DEPS_EL=	gcc gnupg python python-dateutil
+DEPS_DEB=	gcc gnupg
+DEPS_EL=	gcc gnupg
 
 ######################
 # rpm packaging data #
@@ -50,7 +50,7 @@ SRPMS =		$(TOPDIR)/SRPMS
 
 SPECFILE =	$(NAME).spec
 
-RPMBUILD =	rpmbuild -v -bb \
+RPMBUILD =	rpmbuild -v -bb --buildroot $(BUILDROOT) \
 			--define "_unpackaged_files_terminate_build 0" \
 			--define "_rpmdir $(RPMS)" \
 			--define "_builddir $(BUILD)" \
@@ -60,7 +60,7 @@ RPMBUILD =	rpmbuild -v -bb \
 #  stunnel compilation part #
 #############################
 
-all:	build dist
+all:	stunnel-build stunnel-dist
 
 stunnel-depends: stunnel-depends-el
 
@@ -194,14 +194,19 @@ $(SRPMS): $(TOPDIR)
 rpm-dirs: $(SOURCES) $(BUILD) $(BUILDROOT) $(RPMS) $(SRPMS)
 
 rpm-deps:
-	sudo yum install -y git
+	# TODO: detect EL vs DEB
+	# TODO: move list of deps to variable
+	sudo yum install -y rpm-build python PyYAML python-dateutil
 
-rpm-build: rpm-deps
+rpm-build: rpm-deps rpm-dirs stunnel-dist
 	$(RPMBUILD) $(SPECFILE)
 	mv $(RPMS)/*/*.rpm .
 
 rpm-clean:
 	rm -rf rpmbuild changes.rpm
+
+rpm-clean-dist: rpm-clean
+	rm -f ipnett-*.rpm
 
 rpm:	rpm-clean rpm-build
 
@@ -211,4 +216,4 @@ rpm:	rpm-clean rpm-build
 
 clean:	rpm-clean stunnel-clean
 
-clean-dist: rpm-clean stunnel-clean-dist
+clean-dist: rpm-clean-dist stunnel-clean-dist
