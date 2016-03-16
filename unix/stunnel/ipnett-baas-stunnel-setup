@@ -1,0 +1,73 @@
+#!/bin/bash
+#
+# Helper script for stunnel-tsm.conf generation.
+#
+# This script parses configured TSM servers from the TSM configuration file
+# and inserts a resulting (1) server into stunnel-tsm.conf
+#
+# Author: Martin Millnert <martin.millnert@ipnett.com>
+# Copyright IPnett Cloud Services, 2016
+
+
+DSM_SYS="/opt/tivoli/tsm/client/ba/bin/dsm.sys"
+STUNNEL_CONF="/opt/stunnel/conf/stunnel-tsm.conf"
+STUNNEL_CONF_TEMPLATE="/opt/stunnel/conf/stunnel-tsm.conf.template"
+
+function pick_server() {
+	dsmsys=$1
+	if [ -f "$dsmsys" ]; then
+		servernames=(`grep -E '^SERVERNAME' $dsmsys |
+			      sed -e 's/^SERVERNAME *//g'`)
+		if [ ${#servernames[@]} = 0 ]; then
+			>&2 echo "Did not find any TSM servers - aborting."
+			exit 1
+		elif [ ${#servernames[@]} = 1 ]; then
+			>&2 echo "Found 1 TSM server"
+			>&2 echo "server: ${servernames[0]}"
+			echo "${servernames[0]}"
+		elif [ ${#servernames[@]} -gt 1 ]; then
+			>&2 echo "Found ${#servernames[@]} TSM servers"
+			let arrlenm1=${#servernames[@]}-1
+			for i in `seq 0 $arrlenm1`; do
+				>&2 echo "server[$i]: ${servernames[$i]}"
+			done
+			>&2 echo "Choose server (default=0):"
+			read choice
+			choice=${choice:-0}
+			>&2 echo "Selected ${servernames[$choice]}"
+			echo "${servernames[$choice]}"
+		fi
+	else
+		echo "Could not locate DSM.SYS ( $dsmsys ) - aborting."
+		exit 2
+	fi
+}
+
+function v4ify_servername() {
+	servername=$1
+	# Needs improvement, only works on production hostnames
+	echo $servername | sed -e 's/\.cloud/-v4.cloud/g'
+}
+
+function generate_stunnel_config() {
+	servername=$1
+	template=$2
+	conffile=$3
+	sed -e "s/%%TSMSERVER%%/$servername/g" $template > $conffile
+	echo "Wrote configuration to: $conffile"
+	echo ">>>"
+	sed -e 's/^/\t/g' $conffile
+	echo "<<<EOF"
+}
+
+if [ $# -eq 1 ]; then
+	server=`pick_server $1`
+else
+	server=`pick_server $DSM_SYS`
+fi
+echo "resulting server: $server"
+
+server_v4=`v4ify_servername $server`
+echo "server_v4: $server_v4"
+
+generate_stunnel_config $server_v4 $STUNNEL_CONF_TEMPLATE $STUNNEL_CONF

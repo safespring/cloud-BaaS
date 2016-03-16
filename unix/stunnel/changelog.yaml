@@ -1,0 +1,50 @@
+- version: 0.1
+  package: ipnett-stunnel
+  deb-distribution: Lenny / Lucid
+  date: "Fri Nov 28 2014 15:44:17 +0100"
+  urgency: low
+  notes: |
+    - first release, using:
+      * openssl-1.0.1j
+      * stunnel-5.0.7
+    - incorporates IPnett BaaS CA cert
+    - staticially configured for tsm1.cloud.ipnett.se
+  author: "Martin Millnert <martin.millnert@ipnett.com>"
+
+- version: 0.2
+  package: ipnett-stunnel
+  deb-distribution: Lenny / Lucid
+  date: "Fri Mar 20 2015 20:11:18 +0100"
+  urgency: low
+  notes: |
+    - second release, using:
+      * openssl-1.0.1m
+      * stunnel-5.0.7
+    - security fixes in openssl:
+      https://github.com/openssl/openssl/blob/OpenSSL_1_0_1-stable/CHANGES
+    - security fixes in stunnel:
+      https://www.stunnel.org/sdf_ChangeLog.html
+    - updates incorporated IPneet BaaS CA cert
+    - statically configured for tsm1-v4.cloud.ipnett.se
+      works around bug with older RHEL/CentOS where stunnel tries to connect to
+      all tsm1.cloud.ipnett.se A/AAAA RRs in a round-robin fashion, regardless
+      of what connectivity OS actually has.
+  author: "Martin Millnert <martin.millnert@ipnett.com>"
+
+- version: 0.3
+  package: ipnett-stunnel
+  deb-distribution: Lenny / Lucid
+  date: "Fri Mar 20 2015 20:11:18 +0100"
+  urgency: low
+  notes: |
+    - third release, using:
+      * openssl-1.0.2g
+      * stunnel-5.31
+    - changed to openssl-1.0.2* as it is new LTS branch
+    - security fixes in openssl:
+      https://github.com/openssl/openssl/blob/OpenSSL_1_0_2-stable/CHANGES
+    - security fixes in stunnel:
+      https://www.stunnel.org/sdf_ChangeLog.html
+    - introduce new ipnett-stunnel-setup script for post-install setup
+    - introduce dsmcad script from Chalmers that also wraps start of stunnel
+  author: "Martin Millnert <martin.millnert@ipnett.com>"
