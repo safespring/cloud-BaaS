@@ -1,6 +1,10 @@
 #!/bin/sh
 
-DSM="/Library/Preferences/Tivoli Storage Manager/dsm.sys"
+if [ -f "/Library/Preferences/Tivoli Storage Manager/dsm.sys" ]; then
+    DSM="/Library/Preferences/Tivoli Storage Manager/dsm.sys"
+else
+    DSM="/Library/Application Support/tivoli/tsm/client/ba/bin/dsm.sys"
+fi
 
 if [ X"$(uname)" = X"Darwin" ]; then
 
