@@ -17,7 +17,7 @@ if [%PASSWORD%] equ [REPLACEME] (
 set KDB="C:\Program Files\Tivoli\TSM\baclient\dsmcert.kdb"
 set GSK8CAPICMD=gsk8capicmd_64
 set ORIGPATH=%PATH%
-set PATH=%PATH%;C:\Program Files\Common Files\Tivoli\TSM\api64\gsk8\lib64;C:\Program Files\Common Files\Tivoli\TSM\api64\gsk8\bin
+set PATH=%PATH%;C:\Program Files\Common Files\Tivoli\TSM\api64\gsk8\lib64;C:\Program Files\Common Files\Tivoli\TSM\api64\gsk8\bin;C:\Program Files\ibm\gsk8\bin;C:\Program Files\ibm\gsk8\lib64
 
 :: Write out PEM-file into PEM-file-name into the Current Directory
 @echo>> SafeDC-Net-CA.pem -----BEGIN CERTIFICATE-----
