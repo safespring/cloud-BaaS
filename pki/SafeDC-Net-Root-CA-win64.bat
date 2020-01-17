@@ -46,7 +46,11 @@ set PATH=%PATH%;C:\Program Files\Common Files\Tivoli\TSM\api64\gsk8\lib64;C:\Pro
 @echo>> SafeDC-Net-CA.pem -----END CERTIFICATE-----
 
 @echo on
-del "C:\Program Files\Tivoli\TSM\baclient\dsmcert.*"
+del "C:\Program Files\Tivoli\TSM\baclient\dsmcert.kdb"
+del "C:\Program Files\Tivoli\TSM\baclient\dsmcert.sth"
+DEL "C:\Program Files\Tivoli\TSM\baclient\dsmcert.crl"
+DEL "C:\Program Files\Tivoli\TSM\baclient\dsmcert.rdb"
+
 %GSK8CAPICMD% -keydb -create -db %KDB% -pw %PASSWORD% -stash
 %GSK8CAPICMD% -cert -add -db %KDB% -label "Safedc Net Root CA" -file SafeDC-Net-CA.pem -format ascii -stashed
 %GSK8CAPICMD% -cert -list -db %KDB% -stashed
