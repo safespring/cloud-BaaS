@@ -1,11 +1,11 @@
-* sample dsm.opt for IPnett Cloud
+*** sample dsm.opt for SafeDC Cloud
+*** Copy and Past Information from Safespring Backup Portal ***
 
-TCPSERVERADDRESS   tsmXX.cloud.ipnett.se
-NODENAME           myTSMnodename
+*** Copy and Past Information from Safespring Backup Portal ***
+
+*** legacy clients may have to use TCPIP
+* COMMMETHOD         TCPIP
 COMMMETHOD         V6TCPIP
-*legacy clients may have to use TCPIP
-*COMMMETHOD         TCPIP
-TCPPORT            1600
 SSL                yes
 SSLREQUIRED        yes
 PASSWORDACCESS     GENERATE
@@ -29,3 +29,4 @@ SRVPREPOSTSNAPDISABLED  yes
 REVOKEREMOTEACCESS Access
 
 DATEFORMAT 3
+TESTFLAG disable_tls13
