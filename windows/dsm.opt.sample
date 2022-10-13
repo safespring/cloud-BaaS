@@ -10,9 +10,10 @@ SSL                yes
 SSLREQUIRED        yes
 PASSWORDACCESS     GENERATE
 MANAGEDSERVICES    SCHEDULE
-VIRTUALMOUNTPOINT  /dev
 SCHEDLOGRETENTION  28
+SCHEDLOGNAME "C:\Program Files\Tivoli\TSM\baclient\dsmsched.log"
 ERRORLOGRETENTION  28
+ERRORLOGNAME "C:\Program Files\Tivoli\TSM\baclient\dsmerror.log"
 
 SCHEDCMDDISABLED   yes
 SCHEDCMDEXCEPTION  "tbmr_license"
