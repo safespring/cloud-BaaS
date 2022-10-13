@@ -10,7 +10,7 @@ whether a file has changed or not, is limited by this performance of a system.
 ## Compilation
 
     cd /usr/local/src
-    git clone https://github.com/IPnett/cloud-BaaS
+    git clone https://github.com/safespring/cloud-BaaS
     cd cloud-BaaS/unix/baselining/recursive-stat
     make
 
