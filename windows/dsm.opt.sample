@@ -1,18 +1,19 @@
-* sample dsm.opt for IPnett Cloud
+*** sample dsm.opt for SafeDC Cloud
+*** Copy and Paste Information from Safespring Backup Portal ***
 
-TCPSERVERADDRESS   tsmXX.cloud.ipnett.se
-NODENAME           myTSMnodename
+*** Copy and Paste Information from Safespring Backup Portal ***
+
+*** legacy clients may have to use TCPIP
+* COMMMETHOD         TCPIP
 COMMMETHOD         V6TCPIP
-*legacy clients may have to use TCPIP
-*COMMMETHOD         TCPIP
-TCPPORT            1600
 SSL                yes
 SSLREQUIRED        yes
 PASSWORDACCESS     GENERATE
 MANAGEDSERVICES    SCHEDULE
-VIRTUALMOUNTPOINT  /dev
 SCHEDLOGRETENTION  28
+SCHEDLOGNAME "C:\Program Files\Tivoli\TSM\baclient\dsmsched.log"
 ERRORLOGRETENTION  28
+ERRORLOGNAME "C:\Program Files\Tivoli\TSM\baclient\dsmerror.log"
 
 SCHEDCMDDISABLED   yes
 SCHEDCMDEXCEPTION  "tbmr_license"
@@ -29,3 +30,4 @@ SRVPREPOSTSNAPDISABLED  yes
 REVOKEREMOTEACCESS Access
 
 DATEFORMAT 3
+TESTFLAG disable_tls13
