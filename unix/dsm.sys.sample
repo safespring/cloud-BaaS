@@ -1,19 +1,22 @@
-* sample dsm.sys for IPnett cloud
+* sample dsm.sys for SafeDC
 
-SERVERNAME tsmXX.cloud.ipnett.se
-  TCPSERVERADDRESS   tsmXX.cloud.ipnett.se
-  NODENAME           myTSMnodename
+SERVERNAME SafeDC
+  *** Copy and Paste Information from Safespring Backup Portal ***
+  
+  *** Copy and Paste Information from Safespring Backup Portal ***
+
   COMMMETHOD         V6TCPIP
 *  legacy clients may have to use TCPIP
-*  COMMMETHOD         TCPIP
-  TCPPORT            1600
+* COMMMETHOD         TCPIP
   SSL                yes
   SSLREQUIRED        yes
   PASSWORDACCESS     GENERATE
   MANAGEDSERVICES    SCHEDULE
   VIRTUALMOUNTPOINT  /dev
   SCHEDLOGRETENTION  28
+  SCHEDLOGNAME       /var/log/dsmsched.log
   ERRORLOGRETENTION  28
+  ERRORLOGNAME       /var/log/dsmerror.log
   SCHEDCMDDISABLED   yes
   SCHEDCMDEXCEPTION  "tbmr_license"
   SCHEDCMDEXCEPTION  "db_full"
@@ -27,3 +30,4 @@ SERVERNAME tsmXX.cloud.ipnett.se
   SRVPREPOSTSNAPDISABLED  yes
 
   REVOKEREMOTEACCESS Access
+  TESTFLAG disable_tls13
