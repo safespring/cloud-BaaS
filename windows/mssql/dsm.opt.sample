@@ -1,0 +1,22 @@
+*** sample dsm.opt for SafeDC Cloud
+*** Copy and Paste Information from Safespring Backup Portal ***
+
+*** Copy and Paste Information from Safespring Backup Portal ***
+
+*** legacy clients may have to use TCPIP
+* COMMMETHOD         TCPIP
+COMMMETHOD         V6TCPIP
+SSL                yes
+SSLREQUIRED        yes
+PASSWORDACCESS     GENERATE
+HTTPport 1581
+
+MANAGEDSERVICES SCHEDULE
+SCHEDLOGRETENTION  28
+SCHEDLOGNAME "C:\Program Files\Tivoli\TSM\TDPSql\dsmsched.log"
+ERRORLOGRETENTION  28
+ERRORLOGNAME "C:\Program Files\Tivoli\TSM\TDPSql\dsmerror.log"
+
+DATEFORMAT 3
+TESTFLAG disable_tls13
+

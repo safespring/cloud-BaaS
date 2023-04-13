@@ -1,0 +1,9 @@
+BACKUPDESTination  	tsm
+BACKUPMETHod 		legacy
+LANGuage     		ENU
+LASTPRUNEDate     	2023-03-11 10:00:00
+DATEformat     		3
+NUMBERformat     	3
+TIMEformat     		1
+LOGPrune     		5
+* ALWAYSONNode      alwayson.node.name_mssql
