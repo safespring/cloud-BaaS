@@ -31,7 +31,8 @@ SCHEDCMDEXCEPTION   "db_incr"
 SCHEDCMDEXCEPTION   "mail_full"
 SCHEDCMDEXCEPTION   "mail_incr"
 SCHEDCMDEXCEPTION   "client_maintenance"
-*PRESCHEDULECMD '"C:\Program Files\Cristie\TBMR\TBMRcfg.exe" > tbmr.log 2>&1'
+*** In case you use TBMR, you should uncomment the following option.
+* PRESCHEDULECMD '"C:\Program Files\Cristie\TBMR\TBMRcfg.exe" > tbmr.log 2>&1'
 
 SCHEDRESTRETRDISABLED   yes
 SRVPREPOSTSCHEDDISABLED yes
