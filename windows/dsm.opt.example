@@ -1,0 +1,63 @@
+*** A working example of a Windows dsm.opt TSM client configuration file.
+
+*** The values of the first three options can be found in the Safespring Backup 
+*** Portal: https://portal.backup.sto2.safedc.net/
+*** Go to [Your Business Unit] -> Consumption Units -> [Your Node] -> Basics
+*** -> Setup information
+*** To use this example as a template, replace "GENERICWINDOWS" with your
+*** node name.
+
+*** Information from Safespring Backup Portal ***
+NODENAME            GENERICWINDOWS
+TCPSERVERADDRESS    server2.backup.dco1.safedc.net
+TCPPORT             1600
+*** Information from Safespring Backup Portal ***
+
+*** Legacy clients may have to use TCPIP (ipv4)
+* COMMMETHOD          TCPIP
+COMMMETHOD          V6TCPIP
+SSL                 yes
+SSLREQUIRED         yes
+SSLDISABLELEGACYTLS yes
+PASSWORDACCESS      GENERATE
+MANAGEDSERVICES     SCHEDULE
+SCHEDLOGRETENTION   28
+ERRORLOGRETENTION   28
+
+SCHEDCMDDISABLED    yes
+SCHEDCMDEXCEPTION   "tbmr_license"
+SCHEDCMDEXCEPTION   "db_full"
+SCHEDCMDEXCEPTION   "db_incr"
+SCHEDCMDEXCEPTION   "mail_full"
+SCHEDCMDEXCEPTION   "mail_incr"
+SCHEDCMDEXCEPTION   "client_maintenance"
+*** In case you use TBMR, you should uncomment the following option.
+* PRESCHEDULECMD '"C:\Program Files\Cristie\TBMR\TBMRcfg.exe" > tbmr.log 2>&1'
+
+SCHEDRESTRETRDISABLED   yes
+SRVPREPOSTSCHEDDISABLED yes
+SRVPREPOSTSNAPDISABLED  yes
+
+REVOKEREMOTEACCESS Access
+
+DATEFORMAT 3
+
+EXCLUDE.BACKUP "*:\microsoft uam volume\...\*"
+EXCLUDE.BACKUP "*:\microsoft uam volume\...\*.*"
+EXCLUDE.BACKUP "*:\...\EA DATA. SF"
+EXCLUDE.BACKUP "*:\IBMBIO.COM"
+EXCLUDE.BACKUP "*:\IBMDOS.COM"
+EXCLUDE.BACKUP "*:\IO.SYS"
+EXCLUDE.ARCHIVE "*:\microsoft uam volume\...\*"
+EXCLUDE.ARCHIVE "*:\microsoft uam volume\...\*.*"
+EXCLUDE.ARCHIVE "*:\...\EA DATA. SF"
+EXCLUDE.ARCHIVE "*:\IBMBIO.COM"
+EXCLUDE.ARCHIVE "*:\IBMDOS.COM"
+EXCLUDE.ARCHIVE "*:\IO.SYS"
+EXCLUDE.DIR "*:\System Volume Information"
+EXCLUDE.DIR "*:\...\Temporary Internet Files"
+EXCLUDE.DIR "*:\Recycled"
+EXCLUDE.DIR "*:\Recycler"
+EXCLUDE.DIR "*:\$Recycle.Bin"
+EXCLUDE.DIR "*:\ProgramData\Cristie\mount\...\*"
+DOMAIN.IMAGE "\\generic-windows\c$"
